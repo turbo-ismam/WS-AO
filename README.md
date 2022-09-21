@@ -1,2 +1,2 @@
 # WS-VGO
-An Ontology based on Video Games
+A Comprehensive Ontology based on Pizza
