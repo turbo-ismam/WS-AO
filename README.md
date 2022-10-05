@@ -1,2 +1,2 @@
-# WS-VGO
+# Web Semantico - Anonimation Ontology
 
