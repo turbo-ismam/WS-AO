@@ -11,9 +11,7 @@ AnonymizedDataset
 	AnonymizedColumn
 		AnonymizationTechnique
 	AnonymizedRecord
-	isPseudoAnonymized
-
-AnonymizationTechnique
+	isPseudoAnonymize
 
 ## Object-Properties modellate
 
