@@ -11,7 +11,6 @@ AnonymizedDataset
 	AnonymizedColumn
 		AnonymizationTechnique
 	AnonymizedRecord
-	AnonymizedTuple
 	isPseudoAnonymized
 
 AnonymizationTechnique
@@ -23,17 +22,10 @@ SourceFile -reFormattedAs-> Dataset
 Dataset -hasPart-> Column
 Dataset -hasPart-> Record
 Record -isPartOf-> Dataset
-Record -hasPart-> Tuple
-Tuple -hasColumn-> Column
-Tuple -isPartOf-> Record
 
 Dataset -anonymizedAs-> AnonymiziedDataset
 AnonymizedDataset -hasPart-> AnonymizedColumn
 AnonymizedDataset -hasPart-> AnonymizedRecord
-AnonymizedRecord -isPartOf-> AnonymizedDataset
-AnonymizedRecord -hasPart-> AnonymizedTuple
-AnonymizedTuple -hasColumn-> AnonymizedColumn
-AnonymizedTuple -isPartOf-> AnonymizedRecord
 
 ## Ontologie esterne
 Sulla base delle entità individuate sono state importate alcune ontologie esterne:
