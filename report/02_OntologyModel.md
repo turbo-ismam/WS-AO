@@ -28,7 +28,7 @@ Entità che rappresenta un dataset alle cui colonne è stata applicata una ao:an
 Entità che rappresenta una colonna di un ao:anonymizedDataset che è stata anonimizzata mediante una anonymizationTechnique. È implementata come sottoclasse di ao:column.
 
 **Attributi e associazioni**
-- anonymizedBy (anonymizationTechnique): tecnica di anonimizzazione utilizzata per anonimizzare la column
+- anonymizedBy (ao:anonymizationTechnique): tecnica di anonimizzazione utilizzata per anonimizzare la column
 
 ### anonymizationTechnique
 Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata ad una ao:column.
@@ -72,6 +72,18 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - range: dcat:Dataset
 - caratteristiche: è una proprietà inverse functional in quanto il dcat:Dataset dal quale è stato ricavato l'ao:identifiedDataset può essere uno solo
 - proprietà inversa: identifiedAs
+
+### anonymizedBy
+- descrizione: proprietà che mette in relazione un ao:anonymizedColumn con la relativa tecnica di anonimizzazione utilizzata
+- dominio: ao:anonymizedColumn
+- range: ao:anonymizationTechnique
+- proprietà inversa: anomyzes
+
+### anomyzes
+- descrizione: proprietà che mette in relazione un ao:anonymizationTechnique con tutte le colonne alle quali è stata applicata
+- dominio: ao:anonymizationTechnique
+- range: ao:anonymizedColumn
+- proprietà inversa: anonymizedBy
 
 ## Ontologie esterne
 Sulla base delle entità individuate sono state importate alcune ontologie esterne:
