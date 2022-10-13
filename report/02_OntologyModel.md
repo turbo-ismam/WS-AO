@@ -3,7 +3,7 @@
 ## Classi modellate
 
 ### identifiedDataset
-Entità che rappresenta un Dataset al quale sono state aggiunte le informazioni riguardanti gli identificatori diretti/indiretti.
+Entità che rappresenta un Dataset al quale sono state aggiunte le informazioni riguardanti gli identificatori diretti/indiretti, partendo da una sorgente rappresentata da un dcat:Dataset.
 È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property hasColumn per individuare le relative Column.
 
 **Attributi e associazioni**
@@ -47,6 +47,31 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - range: dcat:Dataset
 - caratteristiche: è una proprietà inverse functional in quanto una colonna è relativa ad un solo Dataset
 - proprietà inversa: hasColumn
+
+### usedTechnique
+- descrizione: proprietà che mette in relazione un identifiedDataset con l'eventuale tecnica di Machine Learning utilizzata per categorizzare le colonne
+- dominio: ao:identifiedDataset
+- range: mlo:Applications
+- proprietà inversa: usedBy
+
+### usedBy
+- descrizione: proprietà che mette in relazione un mlo:Applications, ossia una tecnica di machine learning, con un'eventuale Dataset al quale è stata applicata 
+- dominio: mlo:Applications
+- range: ao:identifiedDataset
+- proprietà inversa: usedTechnique
+
+### identifiedAs
+- descrizione: proprietà che mette in relazione un dcat:Dataset con la sua controparte le cui colonne sono state categorizzate in identificatori diretti/indiretti
+- dominio: dcat:Dataset
+- range: ao:identifiedDataset
+- proprietà inversa: identifiedFrom
+
+### identifiedFrom
+- descrizione: proprietà che mette in relazione un ao:identifiedDataset col dcat:Dataset dal quale è stato ricavato
+- dominio: ao:identifiedDataset
+- range: dcat:Dataset
+- caratteristiche: è una proprietà inverse functional in quanto il dcat:Dataset dal quale è stato ricavato l'ao:identifiedDataset può essere uno solo
+- proprietà inversa: identifiedAs
 
 ## Ontologie esterne
 Sulla base delle entità individuate sono state importate alcune ontologie esterne:
