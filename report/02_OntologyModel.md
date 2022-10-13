@@ -16,7 +16,7 @@ Entità che rappresenta la colonna di un dcat:Dataset. Tale colonna è già stat
 - isDirectIdentifier (boolean): attributo booleano atto a etichettare la colonna come identificatore diretto 
 - isIndirectIdentifier (boolean): attributo booleano atto a etichettare la colonna come identificatore indiretto
 - identificationRisk (float): attributo float atto a misurare il grado di rischio della colonna, in percentuale
-- 
+
 ### anonymizedDataset
 Entità che rappresenta un dataset alle cui colonne è stata applicata una ao:anonymizationTechnique. 
 È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property hasPart per individuare le relative column. Tramite la object property anonymizedAs l'ao:Dataset viene anonimizzato in un ao:anonymizedDataset. Non tutte le colonne dell'ao:anonymizedDataset devono essere anonimizzate, ma deve contenere almeno una anonymizedColumn.
@@ -28,7 +28,7 @@ Entità che rappresenta un dataset alle cui colonne è stata applicata una ao:an
 Entità che rappresenta una colonna di un ao:anonymizedDataset che è stata anonimizzata mediante una anonymizationTechnique. È implementata come sottoclasse di ao:column.
 
 **Attributi e associazioni**
-anonymizedBy (anonymizationTechnique): tecnica di anonimizzazione utilizzata per anonimizzare la column
+- anonymizedBy (anonymizationTechnique): tecnica di anonimizzazione utilizzata per anonimizzare la column
 
 ### anonymizationTechnique
 Tecnica di anonimizzazione applicata ad una ao:column.
