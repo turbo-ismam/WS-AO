@@ -1,27 +1,19 @@
-import type { Component } from 'solid-js';
+import { Routes, Route } from "@solidjs/router"
+import { lazy } from "solid-js";
 
-import logo from './logo.svg';
-import styles from './App.module.css';
+const Home = lazy(() => import("./pages/Home"));
 
-const App: Component = () => {
-  return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          class={styles.link}
-          href="https://github.com/solidjs/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
-      </header>
-    </div>
-  );
-};
-
-export default App;
+export default function App() {
+  return <>
+    <nav class="px-4 lg:px-6 py-2.5 ">
+      <div class="flex flex-wrap justify-center items-center mx-auto max-w-screen-xl">
+        <a class="flex items-center ml-20 pt-10">
+          <img src="https://i.imgur.com/jtSCRjH.png" class="mr-3" alt="anonym.me Logo" />
+        </a>        
+      </div>
+    </nav>
+    <Routes>
+      <Route path="/" component={Home} />
+    </Routes>
+  </>
+}
