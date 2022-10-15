@@ -89,3 +89,5 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 Sulla base delle entità individuate sono state importate alcune ontologie esterne:
 - DCAT (Data Catalog Vocabulary): vocabolario designato per descrivere cataloghi, dataset e dataservice. Utilizzato per modellare le sorgenti dei dati da anonimizzare.
 - MLO (Machine Learning Ontology): ontologia che descrive tutto il dominio di machine learning. Utilizzata per descrivere eventuali tecniche di machine learning mediante le quali identificare gli identificatori diretti/indiretti.
+- FOAF (Friend Of A Friend): ontologia atta a descrivere persone, organizzazioni, le loro caratteristiche e le relazioni con altre persone. Utilizzata per referenziare i dati individuati riguardanti persone/organizzazioni.
+- Location Ontology (ArCo network): ontologia atta a descrivere luoghi geografici. Utilizzata per referenziare i dati individuati riguardanti luoghi. 
