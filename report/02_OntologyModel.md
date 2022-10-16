@@ -14,12 +14,10 @@ Entità che rappresenta un dataset ai cui record è stata applicata una ao:anony
 
 **Attributi e associazioni**
 - contains (AnonymizedRecord): relazione ad individuare i record anonimizzati che compongono il dataset.
+- usedTechnique (AnonymizationTechnique): relazione atta ad individuare le tecniche di anonimizzazione utilizzate per anonimizzare il dataset.
 
 ### AnonymizedRecord
 Entità che rappresenta un record al quale è stata applicata una tecnica di anonimizzazione. È implementata come sottoclasse di Record.
-
-**Attributi e associazioni**
-- usedTechnique (AnonymizationTechnique): relazione atta ad individuare la/le tecniche di anonimizzazione utilizzate per anonimizzare il record.
 
 ### AnonymizationTechnique
 Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata ad un dataset.
@@ -92,15 +90,15 @@ Entità che rappresenta una categoria di elementi sensibili differente da tutte 
 - proprietà inversa: anonymizedAs
 
 ### usedTechnique
-- descrizione: proprietà che mette in relazione un record anonimizzato con le tecniche di anonimizzazione utilizzate
-- dominio: AnonymizedRecord
+- descrizione: proprietà che mette in relazione un dataset anonimizzato con le tecniche di anonimizzazione utilizzate
+- dominio: AnonymizedDataset
 - range: AnonymizationTechnique
 - proprietà inversa: usedFor
 
 ### usedFor
-- descrizione: proprietà funzionale che mette in relazione un dataset anonimizzato col dataset dal quale è stato ricavato
+- descrizione: proprietà che mette in relazione una tecnica di anonimizzazione con i dataset che la utilizzano
 - dominio: AnonymizationTechnique
-- range: AnonymizedRecord
+- range: AnonymizedDataset
 - proprietà inversa: usedTechnique
 
 ## Ontologie esterne
