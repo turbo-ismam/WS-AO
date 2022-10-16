@@ -2,88 +2,106 @@
 
 ## Classi modellate
 
-### identifiedDataset
-Entità che rappresenta un Dataset al quale sono state aggiunte le informazioni riguardanti gli identificatori diretti/indiretti, partendo da una sorgente rappresentata da un dcat:Dataset.
-È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property hasColumn per individuare le relative Column.
+### Record
+Entità che rappresenta un record appartenente ad un dcat:Dataset.
 
 **Attributi e associazioni**
-- ao:usedTechnique (mlo:Applications): relazione atta a rappresentare un'eventuale tecnica di machine learning utilizzata per classificare la colonna come identificatore
+- contains (Thing): relazione atta ad individuare gli elementi che compongono il record.
 
-### column
-Entità che rappresenta la colonna di un dcat:Dataset. Tale colonna è già stata elaborata a mano o mediante una tecnica di Machine Learning pertanto è già marcata come identificatore diretto o indiretto.
-
-**Attributi e associazioni**
-- isDirectIdentifier (boolean): attributo booleano atto a etichettare la colonna come identificatore diretto 
-- isIndirectIdentifier (boolean): attributo booleano atto a etichettare la colonna come identificatore indiretto
-- identificationRisk (float): attributo float atto a misurare il grado di rischio della colonna, in percentuale
-
-### anonymizedDataset
-Entità che rappresenta un dataset alle cui colonne è stata applicata una ao:anonymizationTechnique. 
-È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property hasColumn per individuare le relative column. Tramite la object property anonymizedAs l'ao:Dataset viene anonimizzato in un ao:anonymizedDataset. Non tutte le colonne dell'ao:anonymizedDataset devono essere anonimizzate, ma deve contenere almeno una anonymizedColumn.
+### AnonymizedDataset
+Entità che rappresenta un dataset ai cui record è stata applicata una ao:anonymizationTechnique. 
+È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property contains per individuare i relativi AnonymizedRecord. Tramite la object property anonymizedAs l'ao:Dataset viene anonimizzato in un ao:anonymizedDataset.
 
 **Attributi e associazioni**
-- hasColumn (column): relazione atta ad individuare le colonne del dataset anonimizzato
+- contains (AnonymizedRecord): relazione ad individuare i record anonimizzati che compongono il dataset.
 
-### anonymizedColumn
-Entità che rappresenta una colonna di un ao:anonymizedDataset che è stata anonimizzata mediante una anonymizationTechnique. È implementata come sottoclasse di ao:column.
+### AnonymizedRecord
+Entità che rappresenta un record al quale è stata applicata una tecnica di anonimizzazione. È implementata come sottoclasse di Record.
 
 **Attributi e associazioni**
-- anonymizedBy (ao:anonymizationTechnique): tecnica di anonimizzazione utilizzata per anonimizzare la column
+- usedTechnique (AnonymizationTechnique): relazione atta ad individuare la/le tecniche di anonimizzazione utilizzate per anonimizzare il record.
 
-### anonymizationTechnique
-Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata ad una ao:column.
+### AnonymizationTechnique
+Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata ad un dataset.
+
+**Attributi e associazioni**
+- name (string): attributo che rappresenta il nome della tecnica di anonimizzazione
+- description (string): attributo che rappresenta una descrizione della tecnica di anonimizzazione
+
+### Thing
+Entità che rappresenta un elemento di un record.
+
+### SensitiveThing
+Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili senza precludere la possibilità di trattare tutti gli elementi allo stesso modo (essendo subClassOf Thing).
+
+**Attributi e associazioni**
+- identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
+- represents (foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc): relazione atta ad individuare la categoria di dati sensibili a cui appartiene l'elemento
+
+### Misc
+Entità che rappresenta una categoria di elementi sensibili differente da tutte le altre.
 
 ## Object-Properties modellate
 
-### hasColumn
-- descrizione: proprietà che mette in relazione un Dataset con le relative colonne
-- dominio: dcat:Dataset
-- range: ao:column
-- proprietà inversa: isColumnOf
+### contains
+- descrizione: proprietà transitiva che mette in relazione un dataset o record con gli elementi di cui son composti
+- dominio: dcat:Dataset, Record
+- range: Record, Thing
+- proprietà inversa: isContainedIn
 
-### isColumnOf
-- descrizione: proprietà che mette in relazione una colonna col relativo Dataset
-- dominio: ao:column
+### isContainedIn
+- descrizione: proprietà transitiva che mette in relazione un record o Thing con l'entità a cui appartengono
+- dominio: Thing, Record
+- range: Record, dcat:Dataset
+- proprietà inversa: contains
+
+### identifiedBy
+- descrizione: proprietà che mette in relazione un elemento sensibile del record con la persona o tecnica che lo ha classificato come tale
+- dominio: SensitiveThing
+- range: foaf:Person, mlo:Applications
+- proprietà inversa: identifies
+
+### identifies
+- descrizione: proprietà che mette in relazione una persona o un algoritmo di machine learning con gli elementi che ha classificato come sensibili
+- dominio: foaf:Person, mlo:Applications
+- range: SensitiveThing
+- proprietà inversa: identifiedBy
+
+### represents
+- descrizione: proprietà funzionale che mette in relazione un elemento sensibile con la categoria di dati sensibili a cui appartiene
+- dominio: SensitiveThing
+- range: foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc
+- proprietà inversa: isRepresentedAs
+
+### isRepresentedAs
+- descrizione: proprietà che mette in relazione una persona, organizzazione, luogo o altro dato sensibile con l'elemento di un record che la rappresenta
+- dominio: foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc
+- range: SensitiveThing
+- proprietà inversa: represents
+
+### anonymizedAs
+- descrizione: proprietà inversamente funzionale che mette in relazione una dataset con la sua versione anonimizzata
+- dominio: dcat:Dataset
+- range: AnonymizedDataset
+- proprietà inversa: anonimizedFrom
+
+### anonimizedFrom
+- descrizione: proprietà funzionale che mette in relazione un dataset anonimizzato col dataset dal quale è stato ricavato
+- dominio: AnonymizedDataset
 - range: dcat:Dataset
-- caratteristiche: è una proprietà inverse functional in quanto una colonna è relativa ad un solo Dataset
-- proprietà inversa: hasColumn
+- proprietà inversa: anonymizedAs
 
 ### usedTechnique
-- descrizione: proprietà che mette in relazione un identifiedDataset con l'eventuale tecnica di Machine Learning utilizzata per categorizzare le colonne
-- dominio: ao:identifiedDataset
-- range: mlo:Applications
-- proprietà inversa: usedBy
+- descrizione: proprietà che mette in relazione un record anonimizzato con le tecniche di anonimizzazione utilizzate
+- dominio: AnonymizedRecord
+- range: AnonymizationTechnique
+- proprietà inversa: usedFor
 
-### usedBy
-- descrizione: proprietà che mette in relazione un mlo:Applications, ossia una tecnica di machine learning, con un'eventuale Dataset al quale è stata applicata 
-- dominio: mlo:Applications
-- range: ao:identifiedDataset
+### usedFor
+- descrizione: proprietà funzionale che mette in relazione un dataset anonimizzato col dataset dal quale è stato ricavato
+- dominio: AnonymizationTechnique
+- range: AnonymizedRecord
 - proprietà inversa: usedTechnique
-
-### identifiedAs
-- descrizione: proprietà che mette in relazione un dcat:Dataset con la sua controparte le cui colonne sono state categorizzate in identificatori diretti/indiretti
-- dominio: dcat:Dataset
-- range: ao:identifiedDataset
-- proprietà inversa: identifiedFrom
-
-### identifiedFrom
-- descrizione: proprietà che mette in relazione un ao:identifiedDataset col dcat:Dataset dal quale è stato ricavato
-- dominio: ao:identifiedDataset
-- range: dcat:Dataset
-- caratteristiche: è una proprietà inverse functional in quanto il dcat:Dataset dal quale è stato ricavato l'ao:identifiedDataset può essere uno solo
-- proprietà inversa: identifiedAs
-
-### anonymizedBy
-- descrizione: proprietà che mette in relazione un ao:anonymizedColumn con la relativa tecnica di anonimizzazione utilizzata
-- dominio: ao:anonymizedColumn
-- range: ao:anonymizationTechnique
-- proprietà inversa: anomyzes
-
-### anomyzes
-- descrizione: proprietà che mette in relazione un ao:anonymizationTechnique con tutte le colonne alle quali è stata applicata
-- dominio: ao:anonymizationTechnique
-- range: ao:anonymizedColumn
-- proprietà inversa: anonymizedBy
 
 ## Ontologie esterne
 Sulla base delle entità individuate sono state importate alcune ontologie esterne:
