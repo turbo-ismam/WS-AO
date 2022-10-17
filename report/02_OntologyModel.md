@@ -41,12 +41,12 @@ Entità che rappresenta una categoria di elementi sensibili differente da tutte 
 ### contains
 - descrizione: proprietà transitiva che mette in relazione un dataset o record con gli elementi di cui son composti
 - dominio: dcat:Dataset, Record
-- range: Record, Thing
+- range: Thing
 - proprietà inversa: isContainedIn
 
 ### isContainedIn
 - descrizione: proprietà transitiva che mette in relazione un record o Thing con l'entità a cui appartengono
-- dominio: Thing, Record
+- dominio: Thing
 - range: Record, dcat:Dataset
 - proprietà inversa: contains
 
