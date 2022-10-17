@@ -31,7 +31,7 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 
 **Attributi e associazioni**
 - identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
-- represents (foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc): relazione atta ad individuare la categoria di dati sensibili a cui appartiene l'elemento
+- represents (foaf:Person, foaf:Organization, lo:location, Misc): relazione atta ad individuare la categoria di dati sensibili a cui appartiene l'elemento
 
 ### Misc
 Entità che rappresenta una categoria di elementi sensibili differente da tutte le altre.
@@ -65,12 +65,12 @@ Entità che rappresenta una categoria di elementi sensibili differente da tutte 
 ### represents
 - descrizione: proprietà funzionale che mette in relazione un elemento sensibile con la categoria di dati sensibili a cui appartiene
 - dominio: SensitiveThing
-- range: foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc
+- range: foaf:Person, foaf:Organization, lo:location, Misc
 - proprietà inversa: isRepresentedAs
 
 ### isRepresentedAs
 - descrizione: proprietà che mette in relazione una persona, organizzazione, luogo o altro dato sensibile con l'elemento di un record che la rappresenta
-- dominio: foaf:Person, foaf:Organization, http://www.ontologydesignpatterns.org/cp/owl/place.owl, Misc
+- dominio: foaf:Person, foaf:Organization, lo:location, Misc
 - range: SensitiveThing
 - proprietà inversa: represents
 
