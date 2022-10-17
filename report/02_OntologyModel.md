@@ -26,9 +26,6 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - name (string): attributo che rappresenta il nome della tecnica di anonimizzazione
 - description (string): attributo che rappresenta una descrizione della tecnica di anonimizzazione
 
-### Thing
-Entità che rappresenta un elemento di un record.
-
 ### SensitiveThing
 Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili senza precludere la possibilità di trattare tutti gli elementi allo stesso modo (essendo subClassOf Thing).
 
