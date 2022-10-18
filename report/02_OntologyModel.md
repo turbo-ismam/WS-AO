@@ -10,14 +10,10 @@ Entità che rappresenta un record appartenente ad un dcat:Dataset.
 
 ### AnonymizedDataset
 Entità che rappresenta un dataset ai cui record è stata applicata una ao:anonymizationTechnique. 
-È implementata come sottoclasse di dcat:Dataset e viene utilizzata come dominio per la object property contains per individuare i relativi AnonymizedRecord. Tramite la object property anonymizedAs l'ao:Dataset viene anonimizzato in un ao:anonymizedDataset.
+È implementata come sottoclasse di dcat:Dataset e si ottiene tramite la object property anonymizedAs partendo dall'ao:Dataset.
 
 **Attributi e associazioni**
-- contains (AnonymizedRecord): relazione ad individuare i record anonimizzati che compongono il dataset.
 - usedTechnique (AnonymizationTechnique): relazione atta ad individuare le tecniche di anonimizzazione utilizzate per anonimizzare il dataset.
-
-### AnonymizedRecord
-Entità che rappresenta un record al quale è stata applicata una tecnica di anonimizzazione. È implementata come sottoclasse di Record.
 
 ### AnonymizationTechnique
 Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata ad un dataset.
@@ -27,7 +23,7 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - description (string): attributo che rappresenta una descrizione della tecnica di anonimizzazione
 
 ### SensitiveThing
-Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili senza precludere la possibilità di trattare tutti gli elementi allo stesso modo (essendo subClassOf Thing).
+Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti.
 
 **Attributi e associazioni**
 - identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
@@ -41,12 +37,12 @@ Entità che rappresenta una categoria di elementi sensibili differente da tutte 
 ### contains
 - descrizione: proprietà transitiva che mette in relazione un dataset o record con gli elementi di cui son composti
 - dominio: dcat:Dataset, Record
-- range: Thing
+- range: Record, SensitiveThing
 - proprietà inversa: isContainedIn
 
 ### isContainedIn
 - descrizione: proprietà transitiva che mette in relazione un record o Thing con l'entità a cui appartengono
-- dominio: Thing
+- dominio: Record, SensitiveThing
 - range: Record, dcat:Dataset
 - proprietà inversa: contains
 
