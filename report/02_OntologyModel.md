@@ -23,11 +23,11 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - description (string): attributo che rappresenta una descrizione della tecnica di anonimizzazione
 
 ### SensitiveThing
-Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti, e di metterli in relazione col soggetto che rappresentano. Si è scelto di modellare questa relazione col soggetto poichè le entità contenute nel dataset sono note soltanto a chi anonimizza il dataset, al quale potrebbe risultare utile ad es. dato un soggetto collegarlo con tutti i Dataset in cui è mezionato. 
+Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti, e di metterli in relazione col soggetto che rappresentano. Si è scelto di modellare questa relazione col soggetto poichè le entità contenute nel dataset sono note soltanto a chi anonimizza il dataset, al quale potrebbe risultare utile ad es. data una foaf:Person collegarla con tutti i Dataset in cui è mezionata. 
 
 **Attributi e associazioni**
 - identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
-- represents (foaf:Person, foaf:Organization, lo:location): relazione atta ad individuare il dato sensibile a cui si fa riferimento
+- represents (owl:Thing): relazione atta ad individuare il dato sensibile a cui si fa riferimento
 
 ## Object-Properties modellate
 
@@ -56,14 +56,14 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - proprietà inversa: identifiedBy
 
 ### represents
-- descrizione: proprietà funzionale che mette in relazione un elemento sensibile col soggetto che rappresenta
+- descrizione: proprietà funzionale che mette in relazione un elemento sensibile col soggetto che esso rappresenta
 - dominio: SensitiveThing
-- range: foaf:Person, foaf:Organization, lo:location
+- range: owl:Thing
 - proprietà inversa: isRepresentedAs
 
 ### isRepresentedAs
-- descrizione: proprietà che mette in relazione una persona, organizzazione o luogo con l'elemento di un record che la rappresenta. Il dominio di questa relazione si suppone venga ampliato in un possibile sviluppo futuro
-- dominio: foaf:Person, foaf:Organization, lo:location
+- descrizione: proprietà che mette in relazione un'entità con l'elemento di un record che la rappresenta
+- dominio: owl:Thing
 - range: SensitiveThing
 - proprietà inversa: represents
 
@@ -96,4 +96,3 @@ Sulla base delle entità individuate sono state importate alcune ontologie ester
 - DCAT (Data Catalog Vocabulary): vocabolario designato per descrivere cataloghi, dataset e dataservice. Utilizzato per modellare le sorgenti dei dati da anonimizzare.
 - MLO (Machine Learning Ontology): ontologia che descrive tutto il dominio di machine learning. Utilizzata per descrivere eventuali tecniche di machine learning mediante le quali identificare gli identificatori diretti/indiretti.
 - FOAF (Friend Of A Friend): ontologia atta a descrivere persone, organizzazioni, le loro caratteristiche e le relazioni con altre persone. Utilizzata per referenziare i dati individuati riguardanti persone/organizzazioni.
-- Location Ontology (ArCo network): ontologia atta a descrivere luoghi geografici. Utilizzata per referenziare i dati individuati riguardanti luoghi. 
