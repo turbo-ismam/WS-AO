@@ -23,14 +23,11 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 - description (string): attributo che rappresenta una descrizione della tecnica di anonimizzazione
 
 ### SensitiveThing
-Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti.
+Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti, e di metterli in relazione col soggetto che rappresentano. Si è scelto di modellare questa relazione col soggetto poichè le entità contenute nel dataset sono note soltanto a chi anonimizza il dataset, al quale potrebbe risultare utile tale associazione. 
 
 **Attributi e associazioni**
 - identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
-- represents (foaf:Person, foaf:Organization, lo:location, Misc): relazione atta ad individuare la categoria di dati sensibili a cui appartiene l'elemento
-
-### Misc
-Entità che rappresenta una categoria di elementi sensibili differente da tutte le altre.
+- represents (foaf:Person, foaf:Organization, lo:location): relazione atta ad individuare il dato sensibile a cui si fa riferimento
 
 ## Object-Properties modellate
 
