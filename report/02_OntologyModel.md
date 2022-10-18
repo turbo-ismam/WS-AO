@@ -47,9 +47,9 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - descrizione: proprietà che mette in relazione un record con gli elementi sensibili che contiene
 - dominio: Record
 - range: SensitiveThing
-- proprietà inversa: from
+- proprietà inversa: locatedIn
 
-### from
+### locatedIn
 - descrizione: proprietà che mette un elemento sensibile col record a cui appartiene
 - dominio: SensitiveThing
 - range: Record
