@@ -56,14 +56,14 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - proprietà inversa: identifiedBy
 
 ### represents
-- descrizione: proprietà funzionale che mette in relazione un elemento sensibile con la categoria di dati sensibili a cui appartiene
+- descrizione: proprietà funzionale che mette in relazione un elemento sensibile col soggetto che rappresenta
 - dominio: SensitiveThing
-- range: foaf:Person, foaf:Organization, lo:location, Misc
+- range: foaf:Person, foaf:Organization, lo:location
 - proprietà inversa: isRepresentedAs
 
 ### isRepresentedAs
-- descrizione: proprietà che mette in relazione una persona, organizzazione, luogo o altro dato sensibile con l'elemento di un record che la rappresenta
-- dominio: foaf:Person, foaf:Organization, lo:location, Misc
+- descrizione: proprietà che mette in relazione una persona, organizzazione o luogo con l'elemento di un record che la rappresenta. Il dominio di questa relazione si suppone venga ampliato in un possibile sviluppo futuro
+- dominio: foaf:Person, foaf:Organization, lo:location
 - range: SensitiveThing
 - proprietà inversa: represents
 
