@@ -6,7 +6,7 @@
 Entità che rappresenta un record appartenente ad un dcat:Dataset.
 
 **Attributi e associazioni**
-- contains (Thing): relazione atta ad individuare gli elementi che compongono il record.
+- has (SensitiveThing): relazione atta ad individuare gli elementi che compongono il record.
 
 ### AnonymizedDataset
 Entità che rappresenta un dataset ai cui record è stata applicata una ao:anonymizationTechnique. 
@@ -32,16 +32,28 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 ## Object-Properties modellate
 
 ### contains
-- descrizione: proprietà transitiva che mette in relazione un dataset o record con gli elementi di cui son composti
-- dominio: dcat:Dataset, Record
-- range: Record, SensitiveThing
+- descrizione: proprietà transitiva che mette in relazione un dataset con i record che lo compongono
+- dominio: dcat:Dataset
+- range: Record
 - proprietà inversa: isContainedIn
 
 ### isContainedIn
-- descrizione: proprietà transitiva che mette in relazione un record o Thing con l'entità a cui appartengono
-- dominio: Record, SensitiveThing
-- range: Record, dcat:Dataset
+- descrizione: proprietà transitiva che mette in relazione un record col dataset a cui appartiene
+- dominio: Record
+- range: dcat:Dataset
 - proprietà inversa: contains
+
+### has
+- descrizione: proprietà che mette in relazione un record con gli elementi sensibili che contiene
+- dominio: Record
+- range: SensitiveThing
+- proprietà inversa: from
+
+### from
+- descrizione: proprietà che mette un elemento sensibile col record a cui appartiene
+- dominio: SensitiveThing
+- range: Record
+- proprietà inversa: has
 
 ### identifiedBy
 - descrizione: proprietà che mette in relazione un elemento sensibile del record con la persona o tecnica che lo ha classificato come tale
