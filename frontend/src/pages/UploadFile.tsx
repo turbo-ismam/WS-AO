@@ -14,8 +14,8 @@ const UploadFile: Component = () => {
     }
 
     const submit = async function() {
-        const res = await createMLQuery(dataset()).data
-        console.log(res)
+        const res = await createMLQuery(dataset() as File)
+        console.log(res.data)
     }
 
   return (
