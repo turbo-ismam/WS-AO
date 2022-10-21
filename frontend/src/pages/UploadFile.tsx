@@ -1,6 +1,21 @@
-import type { Component } from 'solid-js';
+import { Component, createSignal } from 'solid-js'
 
 const UploadFile: Component = () => {
+    const [dataset, setDataset] = createSignal({})
+
+    const fileChangeEvent = (files: FileList | null) => {
+        if(files) {
+            setDataset(files[0])
+            submit()
+        } else {
+            alert("Error selecting file")
+        }
+    }
+
+    const submit = function() {
+        alert("Submit");
+    }
+
   return (
         <div class="h-screen font-sans text-amber-300 border-box">
         <div class="flex justify-center w-full mx-auto sm:max-w-lg">
@@ -9,8 +24,8 @@ const UploadFile: Component = () => {
                     <h2 class="text-2xl font-semibold mb-2">Upload your Dataset</h2>
                     <p class="text-xs text-gray-500">File should be of format .csv</p>
                 </div>
-                <form action="#" class="relative w-4/5 h-32 max-w-xs mb-10">
-                    <input type="file" id="file-upload" class="hidden" />
+                <form class="relative w-4/5 h-32 max-w-xs mb-10">
+                    <input type="file" id="file-upload" class="hidden" onChange={(e) => fileChangeEvent(e.currentTarget.files)}/>
                     <label for="file-upload" class="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
                         <p class="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
                         <svg class="z-10 w-8 h-8 text-amber-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -24,4 +39,4 @@ const UploadFile: Component = () => {
   );
 };
 
-export default UploadFile;
+export default UploadFile
