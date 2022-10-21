@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 
-const Home: Component = () => {
+const UploadFile: Component = () => {
   return (
         <div class="h-screen font-sans text-amber-300 border-box">
         <div class="flex justify-center w-full mx-auto sm:max-w-lg">
@@ -24,4 +24,4 @@ const Home: Component = () => {
   );
 };
 
-export default Home;
+export default UploadFile;
