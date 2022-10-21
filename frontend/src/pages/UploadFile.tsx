@@ -1,4 +1,5 @@
 import { Component, createSignal } from 'solid-js'
+import createMLQuery from '../components/MLQuery'
 
 const UploadFile: Component = () => {
     const [dataset, setDataset] = createSignal({})
@@ -12,8 +13,9 @@ const UploadFile: Component = () => {
         }
     }
 
-    const submit = function() {
-        alert("Submit");
+    const submit = async function() {
+        const res = await createMLQuery(dataset()).data
+        console.log(res)
     }
 
   return (
