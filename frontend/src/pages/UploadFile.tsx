@@ -1,5 +1,5 @@
 import { Component, createSignal } from 'solid-js'
-import createMLQuery from '../components/MLQuery'
+import createMLQuery from '../hooks/MLQuery' 
 
 const UploadFile: Component = () => {
     const [dataset, setDataset] = createSignal({})
