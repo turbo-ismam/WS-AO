@@ -24,7 +24,15 @@ const UploadFile: Component = () => {
             <div class="flex flex-col items-center justify-center bg-gray-800 w-full h-auto my-20 sm:w-3/4 sm:rounded-lg sm:shadow-xl">
                 <div class="mt-10 mb-10 text-center">
                     <h2 class="text-2xl font-semibold mb-2">Upload your Dataset</h2>
-                    <p class="text-xs text-gray-500">File should be of format .csv</p>
+                    <div>
+                        <a href="#" class="mt-10 group relative inline-block text-xs text-gray-500 hover:text-red-500 duration-300">
+                            File should in .json format
+                            <span class="absolute hidden group-hover:flex -top-6 -right-3 translate-x-full w-48 px-2 py-1 bg-gray-700 rounded-lg text-center text-white text-sm before:content-[''] before:absolute before:top-1/2  before:right-[100%] before:-translate-y-1/2 before:border-8 before:border-y-transparent before:border-l-transparent before:border-r-gray-700">
+                                The file should contain only one column with the records to anonymize
+                            </span>
+                        </a>
+                    </div>
+                    <div class="text-xs text-gray-500"></div> 
                 </div>
                 <form class="relative w-4/5 h-32 max-w-xs mb-10">
                     <input type="file" id="file-upload" class="hidden" onChange={(e) => fileChangeEvent(e.currentTarget.files)}/>
