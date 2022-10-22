@@ -9,7 +9,7 @@ const Header: Component = () => {
         </a>        
         </div>
     </nav>
-  );
-};
+  )
+}
 
 export default Header
