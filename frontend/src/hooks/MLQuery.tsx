@@ -1,13 +1,17 @@
 import axios from 'axios'
 
-const createMLQuery = (file: File) => {
-    return axios.post(
-        "https://api-inference.huggingface.co/models/dslim/bert-large-NER",
-        JSON.stringify("My name is Sarah Jessica Parker but you can call me Jessica"),
-        { 
-            headers: { Authorization: "Bearer " } 
-        },
-    )
+const createMLQuery = (text: String) => {
+    try {
+        return axios.post(
+            "https://api-inference.huggingface.co/models/dslim/bert-large-NER",
+            JSON.stringify(text),
+            { 
+                headers: { Authorization: "Bearer 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" } 
+            },
+        )
+    } catch {
+        return {data: "ML Parsing Error"}
+    }
 }
 
 export default createMLQuery
