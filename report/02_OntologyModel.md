@@ -35,24 +35,28 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - descrizione: proprietà transitiva che mette in relazione un dataset con i record che lo compongono
 - dominio: dcat:Dataset
 - range: Record
+- subProperty Of: hasPart
 - proprietà inversa: isContainedIn
 
 ### isContainedIn
 - descrizione: proprietà transitiva che mette in relazione un record col dataset a cui appartiene
 - dominio: Record
 - range: dcat:Dataset
+- subProperty Of: mlo:isPart
 - proprietà inversa: contains
 
 ### has
 - descrizione: proprietà che mette in relazione un record con gli elementi sensibili che contiene
 - dominio: Record
 - range: SensitiveThing
+- subProperty Of: hasPart
 - proprietà inversa: locatedIn
 
 ### locatedIn
 - descrizione: proprietà che mette un elemento sensibile col record a cui appartiene
 - dominio: SensitiveThing
 - range: Record
+- subProperty Of: mlo:isPart
 - proprietà inversa: has
 
 ### identifiedBy
