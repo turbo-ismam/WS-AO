@@ -3,6 +3,7 @@ import { lazy } from "solid-js"
 
 const Header = lazy(() => import("./components/Header"))
 const UploadRecords = lazy(() => import("./pages/UploadRecords"))
+const QueryDataset = lazy(() => import("./pages/QueryDataset"))
 
 export default function App() {
   return <>
