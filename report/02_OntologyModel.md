@@ -13,6 +13,7 @@ Entità che rappresenta un dataset ai cui record è stata applicata una ao:anony
 È implementata come sottoclasse di dcat:Dataset e si ottiene tramite la object property anonymizedAs partendo dall'ao:Dataset.
 
 **Attributi e associazioni**
+- isPseudoAnonymized (Boolean): attributo che indica se il dataset è pseudoanonimizzato.
 - usedTechnique (AnonymizationTechnique): relazione atta ad individuare le tecniche di anonimizzazione utilizzate per anonimizzare il dataset.
 
 ### AnonymizationTechnique
