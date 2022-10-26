@@ -31,6 +31,7 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - represents (owl:Thing): relazione atta ad individuare il dato sensibile a cui si fa riferimento
 
 ## Object-Properties modellate
+In seguito le objectO bject-Properties modellate, da notare che alcune sono subProperty di altre in modo da ottenere una property chain.
 
 ### contains
 - descrizione: proprietà transitiva che mette in relazione un dataset con i record che lo compongono
@@ -61,9 +62,23 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - proprietà inversa: has
 
 ### identifiedBy
-- descrizione: proprietà che mette in relazione un elemento sensibile del record con la persona o tecnica che lo ha classificato come tale
-- dominio: SensitiveThing
-- range: foaf:Person, mlo:Applications
+- descrizione: proprietà che mette in relazione un elemento sensibile con l'elemento che lo ha classificato come tale. Nel nostro dominio non viene mai utilizzata direttamente ma solamente come "interfaccia" per le subProperties.
+- dominio: owl:Thing
+- range: owl:Thing
+- proprietà inversa: identifies
+
+### identifiedByPerson
+- descrizione: proprietà che mette in relazione un elemento sensibile con la persona che lo ha classificato come tale
+- dominio: Record
+- range: foaf:Person
+- subProperty Of: identifiedBy
+- proprietà inversa: identifies
+
+### identifiedByMLTechnique
+- descrizione: proprietà che mette in relazione un elemento sensibile con l'algoritmo di Machine Learing che lo ha classificato come tale
+- dominio: Record
+- range: mlo:Applications
+- subProperty Of: identifiedBy
 - proprietà inversa: identifies
 
 ### identifies
