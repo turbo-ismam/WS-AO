@@ -11,7 +11,7 @@ export default function App() {
     <div class="h-screen font-sans text-amber-300 border-box">
       <div class="flex justify-center w-full mx-auto">
         <Routes>
-          <Route path="/" component={QueryDataset} />
+          <Route path="/" component={UploadRecords} />
         </Routes>
       </div>
     </div>
