@@ -6,6 +6,7 @@
 Entità che rappresenta un record appartenente ad un dcat:Dataset.
 
 **Attributi e associazioni**
+- text (String): attributo che rappresenta il testo del Record
 - has (SensitiveThing): relazione atta ad individuare gli elementi che compongono il record.
 
 ### AnonymizedDataset
@@ -27,6 +28,8 @@ Entità che rappresenta la tecnica di anonimizzazione che può essesre applicata
 Entità che rappresenta un elemento di un record che può essere un identificatore diretto o indiretto. SensitiveThing permette di distinguere concetti potenzialmente sensibili, se presenti, e di metterli in relazione col soggetto che rappresentano. Si è scelto di modellare questa relazione col soggetto poichè le entità contenute nel dataset sono note soltanto a chi anonimizza il dataset, al quale potrebbe risultare utile ad es. data una foaf:Person collegarla con tutti i Dataset in cui è mezionata. 
 
 **Attributi e associazioni**
+- text (String): attributo che rappresenta il valore testuale della SensitiveThing
+- position (int): attributo che rappresenta la posizione all'interno del record della SensitiveThing
 - identifiedBy (foaf:Person, mlo:Applications): relazione atta ad individuare la persona o l'algoritmo di machine learning utilizzato per etichettare l'elemento come sensibile
 - represents (owl:Thing): relazione atta ad individuare il dato sensibile a cui si fa riferimento
 
