@@ -20,4 +20,5 @@ const createStardogQuery = (queryCode: string, options: Partial<StardogQueryOpti
   return { execute }
 }
 
+
 export default createStardogQuery

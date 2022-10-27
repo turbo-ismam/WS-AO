@@ -8,8 +8,12 @@ const QueryDataset = lazy(() => import("./pages/QueryDataset"))
 export default function App() {
   return <>
     <Header />
-    <Routes>
-      <Route path="/" component={UploadRecords} />
-    </Routes>
+    <div class="h-screen font-sans text-amber-300 border-box">
+      <div class="flex justify-center w-full mx-auto">
+        <Routes>
+          <Route path="/" component={QueryDataset} />
+        </Routes>
+      </div>
+    </div>
   </>
 }
