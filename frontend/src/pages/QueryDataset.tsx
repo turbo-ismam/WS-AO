@@ -1,5 +1,6 @@
 import { Component, createSignal, For } from 'solid-js' 
 import { outdent } from 'outdent'
+import createStardogQuery from '../hooks/StardogQuery'
 
 interface Query {
     title: string;
@@ -42,10 +43,16 @@ const Queries: Query[] = [
 ];
 
 const QueryDataset: Component = () => {
-    const [selected, setSelected] = createSignal(Queries[0]);
+    const [selected, setSelected] = createSignal(Queries[0].query);
 
     const resolveQuery = async function() {
-        alert(selected().query)
+        console.log(selected())
+        const query = createStardogQuery(selected())
+        try {
+            await query.execute()
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
@@ -60,7 +67,7 @@ const QueryDataset: Component = () => {
                         <ul class="py-1 w-full">
                             <For each={Queries}>
                                 { el =>                                    
-                                    <li class="hover:bg-gray-600" onClick={() => setSelected(el)}>
+                                    <li class="hover:bg-gray-600" onClick={() => setSelected(el.query)}>
                                         <a class="text-white block px-4 py-2">
                                             {el.title}
                                         </a>
@@ -77,7 +84,8 @@ const QueryDataset: Component = () => {
                         id="query" 
                         rows="6" 
                         class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                        value={selected().query}
+                        value={selected()}
+                        onChange={(el) => setSelected(el.currentTarget.value)}
                         placeholder="Insert query here...">           
                     </textarea>
                 </div>
