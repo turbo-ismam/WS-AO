@@ -1,19 +1,23 @@
 import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser' 
-import createMLQuery from '../hooks/MLQuery' 
+import createMLQuery from '../hooks/MLQuery'
 
 const UploadFile: Component = () => {
     const [dataset, setDataset] = createSignal("")
 
     const submit = async function() {
         parseText(dataset()).forEach(async el => {
-            console.log((await createMLQuery(el)).data)
+            try {
+                console.log((await createMLQuery(el)).data)
+            } catch (e) {
+                console.error(e)
+            }
         })
     }
 
   return (
     <div class="flex flex-col items-center justify-center bg-gray-800 w-full h-auto my-20 sm:w-3/4 sm:rounded-lg sm:shadow-xl">
-        <form class="mt-10 mb-10 text-center w-full" onSubmit={submit}>
+        <form class="mt-10 mb-10 text-center w-full">
             <h2 class="text-2xl font-semibold mb-2">Anonymize your records!</h2>      
             <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Each line will be considered a record (max 100 records)</label>
             <textarea 
@@ -24,7 +28,7 @@ const UploadFile: Component = () => {
                 onChange={(e) => setDataset(e.currentTarget.value)}
                 placeholder="Paste records here...">           
             </textarea>
-            <button type="submit" class="mt-8 font-bold py-2 px-4 rounded bg-amber-300 hover:bg-amber-500 text-black" disabled={dataset() == ""}>Anonymize!</button>
+            <button type="button" onClick={submit} class="mt-8 font-bold py-2 px-4 rounded bg-amber-300 hover:bg-amber-500 text-black" disabled={dataset() == ""}>Anonymize!</button>
         </form>              
     </div>
   );
