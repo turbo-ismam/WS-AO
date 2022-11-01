@@ -3,13 +3,14 @@ import createStardogQuery from "../hooks/StardogQuery"
 export function createDataset(id: String) {
     try {
         const query = createStardogQuery(`
-            PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
-            SELECT ?r
-            WHERE {
-                ?r a dcat:Dataset ;
+            INSERT DATA {
+            GRAPH <https://github.com/turbo-ismam/WS-AO> {
+                <#18245131>
+                a dcat:Dataset ;
+                dcat:sensitivity "12" .
+                }
             }
-        `)
-        query.execute()
+        `).execute()
     } catch (error) {
         alert("Some error occured. Please check!")
     }
