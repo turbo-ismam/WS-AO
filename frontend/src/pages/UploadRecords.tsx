@@ -1,6 +1,8 @@
 import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser' 
 import createMLQuery from '../hooks/MLQuery'
+import { getAnonymizedRecord } from '../Utils/Anonymization'
+import { MLResponse } from '../models/MLResponse'
 
 const UploadFile: Component = () => {
     const [dataset, setDataset] = createSignal("")
@@ -8,11 +10,18 @@ const UploadFile: Component = () => {
     const submit = async function() {
         parseText(dataset()).forEach(async el => {
             try {
-                console.log((await createMLQuery(el)).data)
+                handleResponse(el, (await createMLQuery(el)).data)
             } catch (e) {
                 console.error(e)
             }
         })
+    }
+
+    const handleResponse = async function(record: String, response: MLResponse[]) {
+        const anonymizedRecord = getAnonymizedRecord(record, response.filter(
+            record => record.entity_group == "ORG" && record.score >= 0.6
+        ))
+        console.log(record + "\n" + anonymizedRecord)
     }
 
   return (
