@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser' 
 import createMLQuery from '../hooks/MLQuery'
-import { getAnonymizedRecord } from '../Utils/Anonymization'
+import { getAnonymizedRecord } from '../utils/Anonymization'
 import { MLResponse } from '../models/MLResponse'
 
 const UploadFile: Component = () => {
