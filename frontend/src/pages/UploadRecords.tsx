@@ -4,7 +4,7 @@ import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
 import { MLResponse } from '../models/MLResponse'
 
-const UploadFile: Component = () => {
+const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")
 
     const submit = async function() {
@@ -43,4 +43,4 @@ const UploadFile: Component = () => {
   );
 };
 
-export default UploadFile
+export default UploadRecords
