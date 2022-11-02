@@ -20,14 +20,14 @@ async function getNewID() {
     }
 }
 
-export function createDataset() {   
+export async function createDataset() {   
+    const newID = await getNewID()
     return createStardogQuery(outdent`
         PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
-                <#18245131> 
-                a dcat:Dataset ;
-                ao:sensitivity "12" .
+                <#DS_${newID}> 
+                a dcat:Dataset .
             }
         }
     `)
