@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-import createStardogQuery from "../hooks/StardogQuery"
-import {outdent} from "outdent";
-=======
 import createStardogQuery from '../hooks/StardogQuery'
 import { outdent } from 'outdent'
->>>>>>> 14dc0d8 (Add function to get last ID)
 
-export async function getNewID() {
+async function getNewID() {
     const lastDataset = await createStardogQuery(outdent`
         PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         SELECT ?ds
