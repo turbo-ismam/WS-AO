@@ -1,9 +1,9 @@
-import { Connection, query } from "stardog"
-import { defaultOptions, StardogQueryOptions, StardogQueryResult } from "../models/Stardog"
+import { Connection, query } from 'stardog'
+import { defaultOptions, StardogQueryOptions, StardogQueryResult } from '../models/Stardog'
 
 export const conn = new Connection({
   username: "batikus@gmail.com",
-  password: "****",
+  password: "5Jj64hX4UsnVVHs",
   endpoint: "https://sd-9bccc1ca.stardog.cloud:5820"
 })
 
@@ -14,11 +14,9 @@ const createStardogQuery = (queryCode: string, options: Partial<StardogQueryOpti
   const allOptions = { ...defaultOptions, ...options }
   const execute = async () => {
     const { body } = await query.execute(conn, database, queryCode, mimeType, allOptions)
-    console.log(body)
     return body as StardogQueryResult
   }
   return { execute }
 }
-
 
 export default createStardogQuery 

@@ -3,6 +3,7 @@ import parseText from '../hooks/TextParser'
 import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
 import { MLResponse } from '../models/MLResponse'
+import { getNewID } from '../utils/Query'
 
 const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")

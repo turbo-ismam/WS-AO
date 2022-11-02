@@ -1,20 +1,41 @@
+<<<<<<< HEAD
 import createStardogQuery from "../hooks/StardogQuery"
 import {outdent} from "outdent";
+=======
+import createStardogQuery from '../hooks/StardogQuery'
+import { outdent } from 'outdent'
+>>>>>>> 14dc0d8 (Add function to get last ID)
 
-export function createDataset(id: String) {
+export async function getNewID() {
+    const lastDataset = await createStardogQuery(outdent`
+        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
+        SELECT ?ds
+        FROM <https://github.com/turbo-ismam/WS-AO/>
+        WHERE {
+            ?ds
+                a dcat:Dataset .         
+        }
+        ORDER BY desc(?ds)
+    `, { limit: 1 }).execute()
     try {
-        const query = createStardogQuery(`
-            INSERT DATA {
-            GRAPH <https://github.com/turbo-ismam/WS-AO> {
-                <#18245131>
-                a dcat:Dataset ;
-                dcat:sensitivity "12" .
-                }
-            }
-        `).execute()
-    } catch (error) {
-        alert("Some error occured. Please check!")
+        const lastID: number = +(lastDataset.results.bindings[0].ds.value as String).slice(20)
+        return(lastID + 1) 
+    } catch {
+        console.error("Error retrieving last ID")
     }
+}
+
+export function createDataset() {   
+    return createStardogQuery(outdent`
+        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
+        INSERT DATA {
+            GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+                <#18245131> 
+                a dcat:Dataset ;
+                ao:sensitivity "12" .
+            }
+        }
+    `)
 }
 
 export function createRecord() {
