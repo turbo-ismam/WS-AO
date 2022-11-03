@@ -1,4 +1,4 @@
 export interface DcatDataset {
-    id: String,
-    Sensitivity: Number
+    id: string,
+    Sensitivity: number
 }

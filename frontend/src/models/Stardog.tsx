@@ -18,3 +18,7 @@ export interface StardogQueryResult {
         bindings: unknown[]
     }
 }
+
+export function StardogPrefix(id: string) {
+    return `<tag:stardog:api:${id}>`
+}

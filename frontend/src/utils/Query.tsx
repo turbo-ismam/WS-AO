@@ -1,5 +1,9 @@
 import createStardogQuery from '../hooks/StardogQuery'
+import { StardogPrefix } from '../models/Stardog'
+import { Record } from '../models/Record'
+import { SensitiveThing } from '../models/SensitiveThing'
 import { outdent } from 'outdent'
+import { AnonymizedDataset } from '../models/AnonymizedDataset'
 
 async function getNewID() {
     const lastDataset = await createStardogQuery(outdent`
@@ -27,46 +31,62 @@ export async function createDataset() {
         INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
                 <#DS_${newID}> 
-                a dcat:Dataset .
+                    a dcat:Dataset .
             }
         }
     `)
 }
 
-export function createRecord() {
+export function createRecord(record: Record) {
     return createStardogQuery(outdent`
         PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
-                <#12341>
+                <${record.id}>
                     a ao:Record ;
-                    ao:text "Gianfalco".
+                    ao:text "${record.text}" ;
+                    ao:isContainedIn <${StardogPrefix(record.dataset)}> .
+                <${StardogPrefix(record.dataset)}>
+                    ao:contains <${StardogPrefix(record.id)}> .
             }
         }
     `)
 }
 
-export function addSensitiveThing() {
+export function addSensitiveThing(sensitiveThing: SensitiveThing) {
     return createStardogQuery(outdent`
-        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
-                <#Sensitive_Thing>
+                <${sensitiveThing.id}>
                     a ao:SensitiveThing ;
-                    ao:text "Berlusconi" ;
-                    ao:position "13" .
+                    ao:text "${sensitiveThing.text}" ;
+                    ao:position ${sensitiveThing.position} ;
+                    ao:locatedIn <${StardogPrefix(sensitiveThing.record)}> ;
+                    ${sensitiveThing.represents ? "ao:represents <" + sensitiveThing.represents + "> ;" : ""}
+                    ao:identifiedByMLTechnique <http://www.a2rd.net.br/mlo#Text_Classification> .
+                <http://www.a2rd.net.br/mlo#Text_Classification>
+                    ao:identifies <${StardogPrefix(sensitiveThing.id)}> .
+                <${StardogPrefix(sensitiveThing.record)}>
+                    ao:has <${StardogPrefix(sensitiveThing.id)}> .
+                ${sensitiveThing.represents ? "<" + sensitiveThing.represents + "> ao:isRepresentedAs <" + StardogPrefix(sensitiveThing.id) + "> .": ""}
             }
         }
     `)
 }
 
-export function createAnonymizedDataset() {
+export function createAnonymizedDataset(anonymizedDataset: AnonymizedDataset) {
     return createStardogQuery(outdent`
         PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
-                <#Anonymized_Dataset_01>
+                <${anonymizedDataset.id}>
                     a ao:AnonymizedDataset ;
+                    ao:usedTechnique <${StardogPrefix(anonymizedDataset.technique)}> ;
+                    ao:anonymizedFrom <${StardogPrefix(anonymizedDataset.dataset)}> .
+                <${anonymizedDataset.dataset}>
+                    ao:anonymizedAs <${StardogPrefix(anonymizedDataset.id)}> .               
+                <${anonymizedDataset.technique}>
+                    ao:usedFor <${StardogPrefix(anonymizedDataset.id)}> .
             }
         }
     `)

@@ -1,5 +1,7 @@
 export interface SensitiveThing {
-    id: String,
-    text: String,
-    position: String
+    id: string,
+    text: string,
+    position: number,
+    record: string,
+    represents?: string,
 }

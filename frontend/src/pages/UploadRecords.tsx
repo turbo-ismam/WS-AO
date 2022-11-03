@@ -2,12 +2,14 @@ import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser' 
 import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
+import { createDataset } from '../utils/Query'
 import { MLResponse } from '../models/MLResponse'
 
 const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")
 
     const submit = async function() {
+        await (await createDataset()).execute()
         parseText(dataset()).forEach(async el => {
             try {
                 handleResponse(el, (await createMLQuery(el)).data)

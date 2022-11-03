@@ -1,4 +1,5 @@
 export interface Record {
-    id: String,
-    text: String,
+    id: string,
+    text: string,
+    dataset: string,
 }
