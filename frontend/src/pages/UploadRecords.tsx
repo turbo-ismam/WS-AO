@@ -2,24 +2,69 @@ import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser' 
 import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
-import { createDataset } from '../utils/Query'
+import { createDataset, createRecord, createSensitiveThing, createAnonymizedDataset, getNewID } from '../utils/Query'
 import { MLResponse } from '../models/MLResponse'
 
 const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")
 
-    const submit = async function() {
-        await (await createDataset()).execute()
-        parseText(dataset()).forEach(async el => {
-            try {
-                handleResponse(el, (await createMLQuery(el)).data)
-            } catch (e) {
-                console.error(e)
-            }
-        })
+    const submit = async function() {  
+        try {
+            const idN = await getNewID()
+            console.log("Creating DS " + idN)
+            const datasetID = "#DS_" + idN
+            const anonymizedDatasetID = "#ADS_" + idN
+
+            //For the scope of this project we consider all Datasets as valid, even if each string is already anonymous
+            await createDataset({
+                id: datasetID
+            }).execute()
+
+            await createAnonymizedDataset({
+                id: anonymizedDatasetID,
+                dataset: datasetID,
+                technique: "#AT_DataMasking",
+            }).execute()
+
+            //forEach record in the textbox
+            parseText(dataset()).forEach(async (el, i) => {                       
+                const potentialSensitiveThings = (await createMLQuery(el)).data
+                //In this case we only anonymize ORGanizations
+                const sensitiveThings = potentialSensitiveThings.filter((responseEl: MLResponse) => 
+                    responseEl.entity_group == "ORG" && responseEl.score >= 0.6
+                )
+
+                const recordID = `#R${idN}_${i}`
+                await createRecord({
+                    id: recordID,
+                    text: el,
+                    dataset: datasetID,
+                }).execute()
+                await createRecord({
+                    id: `#AR${idN}_${i}`,
+                    text: getAnonymizedRecord(el, sensitiveThings),
+                    dataset: anonymizedDatasetID,
+                }).execute()
+
+                if(sensitiveThings.length > 0 ) {
+                    sensitiveThings.forEach(async (sensitiveThing: MLResponse, sensitiveThingI: number) => {
+                        await createSensitiveThing({
+                            id: `#ST_${idN}_${i}_${sensitiveThingI}`,
+                            text: sensitiveThing.word,
+                            position: sensitiveThing.start,
+                            record: recordID,
+                        }).execute()
+                    });
+                }
+                
+            }) 
+            console.log("Dataset Anonymized")
+        } catch (e) {
+            console.error("UPLOADING_RECORDS_ERROR: " + e)
+        }
     }
 
-    const handleResponse = async function(record: String, response: MLResponse[]) {
+    const handleResponse = async function(record: string, response: MLResponse[]) {
         const anonymizedRecord = getAnonymizedRecord(record, response.filter(
             record => record.entity_group == "ORG" && record.score >= 0.6
         ))

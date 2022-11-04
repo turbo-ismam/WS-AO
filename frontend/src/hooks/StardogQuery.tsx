@@ -14,7 +14,6 @@ const createStardogQuery = (queryCode: string, options: Partial<StardogQueryOpti
   const allOptions = { ...defaultOptions, ...options }
   const execute = async () => {
     const { body } = await query.execute(conn, database, queryCode, mimeType, allOptions)
-    console.log(body)
     return body as StardogQueryResult
   }
   return { execute }
