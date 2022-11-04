@@ -10,7 +10,9 @@ const UploadRecords: Component = () => {
 
     const submit = async function() {  
         try {
-            const idN = await getNewID()
+            var idN = await getNewID()
+            if(idN == undefined || idN == NaN)
+                idN = 0
             console.log("Creating DS " + idN)
             const datasetID = "#DS_" + idN
             const anonymizedDatasetID = "#ADS_" + idN
