@@ -4,9 +4,12 @@ import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
 import { createDataset, createRecord, createSensitiveThing, createAnonymizedDataset, getNewID } from '../utils/Query'
 import { MLResponse } from '../models/MLResponse'
+import { useNavigate } from '@solidjs/router'
+
 
 const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")
+    const navigate = useNavigate()
 
     const submit = async function() {  
         try {
@@ -57,20 +60,14 @@ const UploadRecords: Component = () => {
                             record: recordID,
                         }).execute()
                     });
-                }
-                
+                } 
             }) 
-            console.log("Dataset Anonymized")
         } catch (e) {
-            console.error("UPLOADING_RECORDS_ERROR: " + e)
+            alert("UPLOADING_RECORDS_ERROR: " + e)
+        } finally {
+            console.log("Dataset Anonymized")
+            navigate("/query/" + idN)
         }
-    }
-
-    const handleResponse = async function(record: string, response: MLResponse[]) {
-        const anonymizedRecord = getAnonymizedRecord(record, response.filter(
-            record => record.entity_group == "ORG" && record.score >= 0.6
-        ))
-        console.log(record + "\n" + anonymizedRecord)
     }
 
   return (

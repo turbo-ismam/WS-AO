@@ -12,6 +12,7 @@ export default function App() {
       <div class="flex justify-center w-full mx-auto">
         <Routes>
           <Route path="/" component={UploadRecords} />
+          <Route path="/query/:dataset" component={QueryDataset} />
         </Routes>
       </div>
     </div>

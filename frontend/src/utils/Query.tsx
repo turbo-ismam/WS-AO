@@ -18,7 +18,7 @@ export async function getNewID() {
         ORDER BY desc(?ds)
     `, { limit: 1 }).execute()
     try {
-        const lastID: number = +(lastDataset.results.bindings[0].ds.value as String).slice(20)
+        const lastID: number = +((lastDataset.results.bindings[0] as any).ds.value as String).slice(20)
         return(lastID + 1) 
     } catch {
         console.error("Error retrieving last ID")
