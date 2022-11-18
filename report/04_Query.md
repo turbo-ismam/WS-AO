@@ -1,31 +1,59 @@
 # Descrizione delle query
 
-In questo capitolo verranno riportate alcune query per l'estrazione di dati, scritte in linguaggio SPAR-QL.
-Il codice delle query che susseguono possono essere visualizzate ad eseguite sull'applicativo.
+In questo capitolo verranno riportate alcune query per l'estrazione di dati, scritte in linguaggio SPARQL.
+Il codice delle query che susseguono possono essere visualizzate ed eseguite sull'applicativo.
 
-## Query senza reasoner
-
-Le query in questa sotto sezione non necessitano del reasoner e sono semplici interrogazioni ...
-
-* **Lista Record sensibili**
+* **Dato un Dataset, lista Record inseriti**
 ```
-SELECT
-  ?Record
-FROM <https://wsao.ontology/>
+SELECT ?record ?text
+FROM ${from}
 WHERE {
-  
+    ?record
+        a ao:Record ;
+        ao:text ?text ;
+        ao:isContainedIn ${dataset}.
 }
 ```
-* **Dato un dataset, trova tutti i record con elementi sensibili sensibili**
+* **Dato un Dataset, lista Record Anonimizzati **
 ```
-SELECT
-  ?Record ?SensitiveThing
-FROM <https://wsao.ontology/>
+SELECT ?record ?text
+FROM ${from}
 WHERE {
-  ?Record 
-    a ao:Record ;
-    ao:isContainedIn "idDataset" ;
-    ao:has ?SensitiveThing .
+    ?record
+        a ao:Record ;
+        ao:text ?text ;
+        ao:isContainedIn ${anonymizedDS}.
+}
+```
+* **Dato un dataset, numero di record sensibili e non sensibili**
+```
+SELECT (COUNT(?record) as ?NotSensibleRecords) (COUNT(?recordSens) as ?SensibleRecords)
+FROM ${from}
+WHERE {
+    {
+    ?record
+        a ao:Record ;
+        ao:isContainedIn ${dataset}.
+        MINUS {?record ao:has ?sens}
+    } UNION {
+    ?recordSens
+        a ao:Record ;
+        ao:has ?sens;
+        ao:isContainedIn ${dataset}.
+    }
+}
+```
+
+* **Dato un dataset, tutte le organizzazioni menzionate**
+```
+SELECT ?org
+FROM ${from}
+WHERE {
+    ?org
+        a foaf:Organization ;
+        ao:isRepresentedBy ?thing .
+    ?thing
+        mlo:isPart ${dataset} .
 }
 ```
 
@@ -55,7 +83,7 @@ PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         }
 ```
 
-## Aggiungere un Sensitive Thing
+## Aggiungere una Sensitive Thing
 ```
 INSERT DATA {
             GRAPH <https://github.com/turbo-ismam/WS-AO/> {
