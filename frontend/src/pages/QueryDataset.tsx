@@ -1,4 +1,4 @@
-import { Component, createSignal, For } from 'solid-js' 
+import { Component, createSignal, For } from 'solid-js'
 import { outdent } from 'outdent'
 import createStardogQuery from '../hooks/StardogQuery'
 import { useParams } from '@solidjs/router';
@@ -6,7 +6,6 @@ import { useParams } from '@solidjs/router';
 interface Query {
     title: string;
     query: string;
-    data: string[];
 }
 
 const QueryDataset: Component = () => {
@@ -22,8 +21,47 @@ const QueryDataset: Component = () => {
             FROM ${from}
             WHERE {
                 
-            }`,
-            data: []
+            }`
+        },
+        {
+            title: 'Inserted Records',
+            query: outdent`SELECT ?record ?text
+            FROM ${from}
+            WHERE {
+                ?record
+                    a ao:Record ;
+                    ao:text ?text ;
+                    ao:isContainedIn ${dataset}.
+            }`
+        },
+        {
+            title: 'Anonimized Records',
+            query: outdent`SELECT ?record ?text
+            FROM ${from}
+            WHERE {
+                ?record
+                    a ao:Record ;
+                    ao:text ?text ;
+                    ao:isContainedIn ${anonymizedDS}.
+            }`
+        },
+        {
+            title: 'Count total records and sensible records',
+            query: outdent`SELECT (COUNT(?record) as ?NotSensibleRecords) (COUNT(?recordSens) as ?SensibleRecords)
+            FROM ${from}
+            WHERE {
+                {
+                ?record
+                    a ao:Record ;
+                    ao:isContainedIn ${dataset}.
+                    MINUS {?record ao:has ?sens}
+                } UNION {
+                ?recordSens
+                    a ao:Record ;
+                    ao:has ?sens;
+                    ao:isContainedIn ${dataset}.
+                }
+            }`
         },
         {
             title: 'All the persons mentioned by the Dataset',
@@ -37,8 +75,7 @@ const QueryDataset: Component = () => {
                 ?thing
                     mlo:isPart ${dataset} .
             }
-            `,
-            data: ['person']
+            `
         },
         {
             title: 'Technique used to anonymized the Dataset',
@@ -52,31 +89,41 @@ const QueryDataset: Component = () => {
                     ao:description ?techniqueDescription;
                     ao:usedFor ${anonymizedDS}.
             }
-            `,
-            data: ['techniqueName', 'techniqueDescription']
+            `
         },
     ];
-    
-    const [selected, setSelected] = createSignal(Queries[0]);
-    const [query, setQuery] = createSignal(Queries[0].query);
-    const [results, setResults] = createSignal("Waiting for query..");
 
-    const resolveQuery = async function() {
-        console.log(selected())
-        const query = createStardogQuery(selected().query)
+    const [queryText, setQueryText] = createSignal(Queries[1].query);
+    const [results, setResults] = createSignal("Waiting for query..");
+    const [loading, setLoading] = createSignal(false)
+
+    const resolveQuery = async function () {
+        if (loading())
+            return
+        setLoading(true)
+        const query = createStardogQuery(queryText())
         try {
-            let results = (await query.execute()).results.bindings
-            if(results.length > 0) {
+            let queryResult = await query.execute()
+            if (queryResult.results && queryResult.results.bindings && queryResult.results.bindings.length > 0) {
                 let text = ""
-                results.forEach(result => {
-                    selected()
+                queryResult.results.bindings.forEach((el: any, index) => {
+                    text += `${index}: ${'\n\r'}`;
+                    for (var prop in el) {
+                        if (Object.prototype.hasOwnProperty.call(el, prop)) {
+                            text += `${prop}: ${el[prop].value} ${'\n\r'}`
+                        }
+                    }
+                    text += '\n\r';
                 })
+                setResults(text)
+                setLoading(false)
             } else {
                 setResults("There hasn't been any match for the inserted query")
+                setLoading(false)
             }
         } catch (e) {
-            if(e instanceof TypeError)
-                setResults("Query Error")
+            setResults("Error")
+            setLoading(false)
             console.error(e)
         }
     }
@@ -84,21 +131,21 @@ const QueryDataset: Component = () => {
     return (
         <div class="flex flex-col items-center justify-center bg-gray-800 w-full h-auto my-20 sm:w-3/4 sm:rounded-lg sm:shadow-xl">
             <h2 class="my-10 text-2xl font-semibold">
-                You dataset has been successfully Anonymized!
-            </h2>    
+                Your dataset has been Anonymized!
+            </h2>
             <div class="p-4 w-full flex flex-col items-center justify-center">
                 <div class="group relative w-full flex items-center justify-center">
                     <button class="text-white bg-gray-700 px-6 h-10 rounded border border-2 border-gray-600 w-3/4 hover:bg-gray-600">Select a query</button>
                     <nav tabindex="0" class="cursor-pointer flex items-center justify-center border border-2 w-3/4 bg-gray-700 invisible border-gray-600 rounded absolute top-full transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
                         <ul class="py-1 w-full">
                             <For each={Queries}>
-                                { el =>                                    
-                                    <li class="hover:bg-gray-600" onClick={() => {setSelected(el); setQuery(el.query)}}>
+                                {el =>
+                                    <li class="hover:bg-gray-600" onClick={() => { setQueryText(el.query); }}>
                                         <a class="text-white block px-4 py-2">
                                             {el.title}
                                         </a>
                                     </li>
-                                }                          
+                                }
                             </For>
                         </ul>
                     </nav>
@@ -106,25 +153,25 @@ const QueryDataset: Component = () => {
             </div>
             <div class="flex flex-row w-full justify-center items-center mb-20">
                 <div class="w-2/5 flex justify-center items-center">
-                    <textarea 
-                        id="query" 
-                        rows="6" 
-                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                        value={selected().query}
-                        onChange={(el) => setQuery(el.currentTarget.value)}
-                        placeholder="Insert query here...">           
+                    <textarea
+                        id="query"
+                        rows="6"
+                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value={queryText()}
+                        onChange={(el) => setQueryText(el.currentTarget.value)}
+                        placeholder="Insert query here...">
                     </textarea>
                 </div>
                 <div class="w-1/5 flex justify-center items-center">
-                    <img class="cursor-pointer" src="https://img.icons8.com/glyph-neue/64/fcd34d/play-button-circled.png" onClick={resolveQuery}/>
+                    <img class="cursor-pointer" src="https://img.icons8.com/glyph-neue/64/fcd34d/play-button-circled.png" onClick={resolveQuery} />
                 </div>
                 <div class="w-2/5 flex justify-center items-center">
-                    <textarea 
+                    <textarea
                         id="result"
-                        readonly 
-                        rows="6" 
-                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                        value={results()}>           
+                        readonly
+                        rows="6"
+                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value={results()}>
                     </textarea>
                 </div>
             </div>
