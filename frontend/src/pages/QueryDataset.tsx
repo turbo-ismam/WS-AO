@@ -6,11 +6,12 @@ import { useParams } from '@solidjs/router';
 interface Query {
     title: string;
     query: string;
+    reasoning: boolean;
 }
 
 const QueryDataset: Component = () => {
     const params = useParams();
-    const from: string = "<https://github.com/turbo-ismam/WS-AO/>"
+    const from: string = '<https://github.com/turbo-ismam/WS-AO/>'
     const dataset: string = `<tag:stardog:api:#DS_${params.dataset}>`
     const anonymizedDS: string = `<tag:stardog:api:#ADS_${params.dataset}>`
 
@@ -21,7 +22,8 @@ const QueryDataset: Component = () => {
             FROM ${from}
             WHERE {
                 
-            }`
+            }`,
+            reasoning: false,
         },
         {
             title: 'Inserted Records',
@@ -32,7 +34,8 @@ const QueryDataset: Component = () => {
                     a ao:Record ;
                     ao:text ?text ;
                     ao:isContainedIn ${dataset}.
-            }`
+            }`,
+            reasoning: false,
         },
         {
             title: 'Anonimized Records',
@@ -43,7 +46,8 @@ const QueryDataset: Component = () => {
                     a ao:Record ;
                     ao:text ?text ;
                     ao:isContainedIn ${anonymizedDS}.
-            }`
+            }`,
+            reasoning: false,
         },
         {
             title: 'Count total records and sensible records',
@@ -61,21 +65,23 @@ const QueryDataset: Component = () => {
                     ao:has ?sens;
                     ao:isContainedIn ${dataset}.
                 }
-            }`
+            }`,
+            reasoning: false,
         },
         {
-            title: 'All the persons mentioned by the Dataset',
+            title: 'All the organizations mentioned by the Dataset',
             query: outdent`
-            SELECT ?person
+            SELECT ?org
             FROM ${from}
             WHERE {
-                ?person
-                    a foaf:person ;
+                ?org
+                    a foaf:Organization ;
                     ao:isRepresentedBy ?thing .
                 ?thing
                     mlo:isPart ${dataset} .
             }
-            `
+            `,
+            reasoning: true,
         },
         {
             title: 'Technique used to anonymized the Dataset',
@@ -89,12 +95,14 @@ const QueryDataset: Component = () => {
                     ao:description ?techniqueDescription;
                     ao:usedFor ${anonymizedDS}.
             }
-            `
+            `,
+            reasoning: false,
         },
     ];
 
-    const [queryText, setQueryText] = createSignal(Queries[1].query);
-    const [results, setResults] = createSignal("Waiting for query..");
+    const [queryText, setQueryText] = createSignal(Queries[1].query)
+    const [results, setResults] = createSignal("Waiting for query..")
+    const [reasoning, setReasoning] = createSignal(false)
     const [loading, setLoading] = createSignal(false)
 
     const resolveQuery = async function () {
@@ -107,13 +115,13 @@ const QueryDataset: Component = () => {
             if (queryResult.results && queryResult.results.bindings && queryResult.results.bindings.length > 0) {
                 let text = ""
                 queryResult.results.bindings.forEach((el: any, index) => {
-                    text += `${index}: ${'\n\r'}`;
+                    text += `${index}: ${'\n\r'}`
                     for (var prop in el) {
                         if (Object.prototype.hasOwnProperty.call(el, prop)) {
                             text += `${prop}: ${el[prop].value} ${'\n\r'}`
                         }
                     }
-                    text += '\n\r';
+                    text += '\n\r'
                 })
                 setResults(text)
                 setLoading(false)
@@ -140,7 +148,7 @@ const QueryDataset: Component = () => {
                         <ul class="py-1 w-full">
                             <For each={Queries}>
                                 {el =>
-                                    <li class="hover:bg-gray-600" onClick={() => { setQueryText(el.query); }}>
+                                    <li class="hover:bg-gray-600" onClick={() => { setQueryText(el.query) }}>
                                         <a class="text-white block px-4 py-2">
                                             {el.title}
                                         </a>

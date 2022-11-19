@@ -2,16 +2,48 @@ import { Component, createSignal } from 'solid-js'
 import parseText from '../hooks/TextParser'
 import createMLQuery from '../hooks/MLQuery'
 import { getAnonymizedRecord } from '../utils/Anonymization'
-import { createDataset, createRecord, createSensitiveThing, createAnonymizedDataset, getNewID } from '../utils/Query'
+import { createDataset, createRecord, createSensitiveThing, createAnonymizedDataset, getNewID, getOrganizationByName } from '../utils/Query'
 import { MLResponse } from '../models/MLResponse'
 import { useNavigate } from '@solidjs/router'
 
 
 const UploadRecords: Component = () => {
     const [dataset, setDataset] = createSignal("")
+    const [loading, setLoading] = createSignal(false)
     const navigate = useNavigate()
 
     const submit = async function () {
+        setLoading(true)
+
+        // First we try to contact the ML Algorythm since it could be busy
+        let sensitiveThings: MLResponse[][] = []
+        let errored = false
+
+        const parsedDS = parseText(dataset())
+        for (let el in parsedDS) {
+            try {
+                const { data, status } = await createMLQuery(parsedDS[el])
+                if (status != 200) {
+                    alert("ML busy, retry in a few seconds")
+                    setLoading(false)
+                    errored = true
+                    return
+                }
+
+                //In this case we only anonymize ORGanizations
+                sensitiveThings[el] = data.filter((responseEl: MLResponse) =>
+                    responseEl.entity_group == "ORG" && responseEl.score >= 0.6
+                )
+            } catch (e) {
+                setLoading(false)
+                console.log("Error Interrogating HuggingFace: " + e)
+            }
+        }
+
+        if (errored == true)
+            return
+
+        // Proceed to create all the Entities in StarDog
         var idN = await getNewID()
         if (idN == undefined || idN == NaN)
             idN = 0
@@ -30,45 +62,42 @@ const UploadRecords: Component = () => {
             technique: "#AT_DataMasking",
         }).execute()
 
-        //forEach record in the textbox
-        parseText(dataset()).forEach(async (el, i) => {
-            let sensitiveThings
-            try {
-                const potentialSensitiveThings = (await createMLQuery(el)).data
-                //In this case we only anonymize ORGanizations
-                sensitiveThings = potentialSensitiveThings.filter((responseEl: MLResponse) =>
-                    responseEl.entity_group == "ORG" && responseEl.score >= 0.6
-                )
-            } catch (e) {
-                console.log("Error Interrogating HuggingFace: " + e)
-            }
-
-            const recordID = `#R${idN}_${i}`
+        //for record in the textbox
+        for (let recordI in parsedDS) {
+            const recordID = `#R${idN}_${recordI}`
             await createRecord({
                 id: recordID,
-                text: el,
+                text: parsedDS[recordI],
                 dataset: datasetID,
             }).execute()
+
             await createRecord({
-                id: `#AR${idN}_${i}`,
-                text: getAnonymizedRecord(el, sensitiveThings),
+                id: `#AR${idN}_${recordI}`,
+                text: getAnonymizedRecord(parsedDS[recordI], sensitiveThings[recordI]),
                 dataset: anonymizedDatasetID,
             }).execute()
 
             if (sensitiveThings.length > 0) {
-                sensitiveThings.forEach(async (sensitiveThing: MLResponse, sensitiveThingI: number) => {
-                    await createSensitiveThing({
-                        id: `#ST_${idN}_${i}_${sensitiveThingI}`,
-                        text: sensitiveThing.word,
-                        position: sensitiveThing.start,
-                        record: recordID,
-                    }).execute()
-                });
-            }
+                // Check if any element corresponds to an existing foaf:Organization and create SensitiveThing
+                for (let thingI in sensitiveThings[recordI]) {
+                    const response = await getOrganizationByName(sensitiveThings[recordI][thingI].word)
 
-            console.log("Dataset Anonymized")
-            navigate("/query/" + idN)
-        })
+                    console.log(response)
+
+                    await createSensitiveThing({
+                        id: `#ST_${idN}_${recordI}_${thingI}`,
+                        text: sensitiveThings[recordI][thingI].word,
+                        position: sensitiveThings[recordI][thingI].start,
+                        record: recordID,
+                        represents: response
+                    }).execute()
+                }
+            }
+        }
+
+        setLoading(false)
+        console.log("Dataset Anonymized")
+        navigate("/query/" + idN)
     }
 
     return (
@@ -84,7 +113,7 @@ const UploadRecords: Component = () => {
                     onChange={(e) => setDataset(e.currentTarget.value)}
                     placeholder="Paste records here...">
                 </textarea>
-                <button type="button" onClick={submit} class="mt-8 font-bold py-2 px-4 rounded bg-amber-300 hover:bg-amber-500 text-black" disabled={dataset() == ""}>Anonymize!</button>
+                <button type="button" onClick={submit} class="mt-8 font-bold py-2 px-4 rounded bg-amber-300 hover:bg-amber-500 text-black" disabled={dataset() == "" || loading() == true}>Anonymize!</button>
             </form>
         </div>
     );

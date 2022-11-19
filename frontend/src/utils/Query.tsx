@@ -6,30 +6,30 @@ import { outdent } from 'outdent'
 import { AnonymizedDataset } from '../models/AnonymizedDataset'
 import { DcatDataset } from '../models/DcatDataset'
 
+const from: string = '<https://github.com/turbo-ismam/WS-AO/>'
+
 export async function getNewID() {
     const lastDataset = await createStardogQuery(outdent`
-        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         SELECT ?ds
-        FROM <https://github.com/turbo-ismam/WS-AO/>
+        FROM ${from}
         WHERE {
             ?ds
                 a dcat:Dataset .         
         }
-        ORDER BY desc(?ds)
-    `, { limit: 1 }).execute()
+    `).execute()
     try {
-        const lastID: number = +((lastDataset.results.bindings[0] as any).ds.value as String).slice(20)
-        return(lastID + 1) 
+        let lastElement = lastDataset.results.bindings[lastDataset.results.bindings.length - 1]
+        const lastID: number = +((lastElement as any).ds.value as String).slice(20)
+        return (lastID + 1)
     } catch {
         console.error("Error retrieving last ID")
     }
 }
 
-export function createDataset(dataset: DcatDataset) {   
+export function createDataset(dataset: DcatDataset) {
     return createStardogQuery(outdent`
-        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
-            GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+            GRAPH ${from} {
                 <${dataset.id}> 
                     a dcat:Dataset .
             }
@@ -39,9 +39,8 @@ export function createDataset(dataset: DcatDataset) {
 
 export function createRecord(record: Record) {
     return createStardogQuery(outdent`
-        PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
-            GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+            GRAPH ${from} {
                 <${record.id}>
                     a ao:Record ;
                     ao:text "${record.text}" ;
@@ -53,10 +52,28 @@ export function createRecord(record: Record) {
     `)
 }
 
+export async function getOrganizationByName(name: string): Promise<string | undefined> {
+    try {
+        let response = await createStardogQuery(outdent`
+    SELECT ?org
+    FROM ${from}
+    WHERE {
+        ?org 
+            a foaf:Organization;
+            foaf:name "${name}".
+    }
+    `, { limit: 1 }).execute()
+
+        return (response.results.bindings[0] as any).org.value
+    } catch {
+        return undefined
+    }
+}
+
 export function createSensitiveThing(sensitiveThing: SensitiveThing) {
     return createStardogQuery(outdent`
         INSERT DATA {
-            GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+            GRAPH ${from} {
                 <${sensitiveThing.id}>
                     a ao:SensitiveThing ;
                     ao:text "${sensitiveThing.text}" ;
@@ -68,7 +85,7 @@ export function createSensitiveThing(sensitiveThing: SensitiveThing) {
                     ao:identifies ${StardogPrefix(sensitiveThing.id)} .
                 ${StardogPrefix(sensitiveThing.record)}
                     ao:has ${StardogPrefix(sensitiveThing.id)} .
-                ${sensitiveThing.represents ? "<" + sensitiveThing.represents + "> ao:isRepresentedAs " + StardogPrefix(sensitiveThing.id) + " .": ""}
+                ${sensitiveThing.represents ? "<" + sensitiveThing.represents + "> ao:isRepresentedAs " + StardogPrefix(sensitiveThing.id) + " ." : ""}
             }
         }
     `)
@@ -78,7 +95,7 @@ export function createAnonymizedDataset(anonymizedDataset: AnonymizedDataset) {
     return createStardogQuery(outdent`
         PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
         INSERT DATA {
-            GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+            GRAPH ${from} {
                 <${anonymizedDataset.id}>
                     a ao:AnonymizedDataset ;
                     ao:usedTechnique ${StardogPrefix(anonymizedDataset.technique)} ;
