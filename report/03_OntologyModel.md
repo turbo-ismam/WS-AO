@@ -34,7 +34,7 @@ Entità che rappresenta un elemento di un record che può essere un identificato
 - represents (owl:Thing): relazione atta ad individuare il dato sensibile a cui si fa riferimento
 
 ## Object-Properties modellate
-In seguito le objectO bject-Properties modellate, da notare che alcune sono subProperty di altre in modo da ottenere una property chain.
+In seguito le Object-Properties modellate, alcune sono state modellate come subProperty di altre in modo da poter sfruttare il Property Chain.
 
 ### contains
 - descrizione: proprietà transitiva che mette in relazione un dataset con i record che lo compongono
