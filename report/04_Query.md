@@ -1,7 +1,7 @@
 # Descrizione delle query
 
 In questo capitolo verranno riportate alcune query per l'estrazione di dati, scritte in linguaggio SPARQL.
-Il codice delle query che susseguono possono essere visualizzate ed eseguite sull'applicativo.
+Il codice delle query che susseguono è implementato e può essere eseguito dall'applicativo.
 
 * **Dato un Dataset, lista Record inseriti**
 ```
