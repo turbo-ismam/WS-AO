@@ -14,7 +14,7 @@ WHERE {
         ao:isContainedIn ${dataset}.
 }
 ```
-* **Dato un Dataset, lista Record Anonimizzati **
+* **Dato un Dataset, lista Record Anonimizzati**
 ```
 SELECT ?record ?text
 FROM ${from}
@@ -45,15 +45,30 @@ WHERE {
 ```
 
 * **Dato un dataset, tutte le organizzazioni menzionate**
+* La query utilizza il reasoner per il Property chain della Object property isPart 
 ```
-SELECT ?org
+SELECT ?name
 FROM ${from}
 WHERE {
     ?org
         a foaf:Organization ;
-        ao:isRepresentedBy ?thing .
+        foaf:name ?name ;
+        ao:isRepresentedAs ?thing .
     ?thing
         mlo:isPart ${dataset} .
+}
+```
+
+* **Dato un dataset anonimizzato, le tecniche usate per anonimizzarlo**
+```
+SELECT ?techniqueName ?techniqueDescription
+FROM ${from}
+WHERE {
+    ?technique
+        a ao:AnonymizationTechnique ;
+        ao:name ?techniqueName;
+        ao:description ?techniqueDescription;
+        ao:usedFor ${anonymizedDS}.
 }
 ```
 
@@ -119,14 +134,3 @@ PREFIX dcat: <https://www.w3.org/TR/vocab-dcat-2/>
             }
         }
 ```
-
-## Verificare che un Sensitive Thing contenga un'Organizzazione
-```
-
-```
-
-##
-```
-
-```
-
