@@ -18,7 +18,7 @@ Per un utente che utilizza l'applicativo è possibile anonimizzare delle informa
 Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o senza reasoner) le query descritte nel capitolo precedente o query create sul momento dall'utente.
 
 
-# Mettere le foto dell'applicazione
+# Immagini dell'applicativo
 <p align="center">
   <img src="res/firefox_aB6VKs6UPW.png"
      alt="Home page" />
@@ -28,9 +28,11 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
 <p align="center">
   <img src="res/image.png"
      alt="Pagine delle query con esempio di Dataset anonimizzato" />
+   <em>Pagine delle query con esempio di Dataset anonimizzato</em>
 </p>
 
 <p align="center">
   <img src="res/firefox_IDsgh2rkqi.png"
      alt="Esempio di query con reasoner" />
+   <em>Esempio di query con reasoner</em>
 </p>
