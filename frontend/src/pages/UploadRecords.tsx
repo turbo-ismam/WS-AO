@@ -78,8 +78,6 @@ const UploadRecords: Component = () => {
                 for (let thingI in sensitiveThings[recordI]) {
                     const response = await getOrganizationByName(sensitiveThings[recordI][thingI].word)
 
-                    console.log(sensitiveThings[recordI][thingI].word, response)
-
                     await createSensitiveThing({
                         id: `#ST_${idN}_${recordI}_${thingI}`,
                         text: sensitiveThings[recordI][thingI].word,

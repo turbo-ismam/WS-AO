@@ -149,7 +149,7 @@ const QueryDataset: Component = () => {
                         <ul class="py-1 w-full">
                             <For each={Queries}>
                                 {el =>
-                                    <li class="hover:bg-gray-600" onClick={() => { setQueryText(el.query); setReasoning(el.reasoning) }}>
+                                    <li class="hover:bg-gray-600" onClick={() => { setQueryText(el.query); setReasoning(el.reasoning); document.getElementById("query")?.focus() }}>
                                         <a class="text-white block px-4 py-2">
                                             {el.title}
                                         </a>
@@ -165,7 +165,7 @@ const QueryDataset: Component = () => {
                     <textarea
                         id="query"
                         rows="6"
-                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm rounded-lg border focus:ring-amber-300 focus:border-amber-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
                         value={queryText()}
                         onChange={(el) => setQueryText(el.currentTarget.value)}
                         placeholder="Insert query here...">
@@ -187,7 +187,7 @@ const QueryDataset: Component = () => {
                         id="result"
                         readonly
                         rows="6"
-                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="block p-2.5 mt-8 w-4/5 h-96 text-sm rounded-lg border focus:ring-amber-300 focus:border-amber-300 bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
                         value={results()}>
                     </textarea>
                 </div>
