@@ -17,16 +17,14 @@ const UploadRecords: Component = () => {
 
         // First we try to contact the ML Algorythm since it could be busy
         let sensitiveThings: MLResponse[][] = []
-        let errored = false
 
         const parsedDS = parseText(dataset())
         for (let el in parsedDS) {
             try {
                 const { data, status } = await createMLQuery(parsedDS[el])
                 if (status != 200) {
-                    alert("ML busy, retry in a few seconds")
+                    console.log("ML busy, retry in a few seconds")
                     setLoading(false)
-                    errored = true
                     return
                 }
 
@@ -37,11 +35,9 @@ const UploadRecords: Component = () => {
             } catch (e) {
                 setLoading(false)
                 console.log("Error Interrogating HuggingFace: " + e)
+                return
             }
         }
-
-        if (errored == true)
-            return
 
         // Proceed to create all the Entities in StarDog
         var idN = await getNewID()
@@ -82,7 +78,7 @@ const UploadRecords: Component = () => {
                 for (let thingI in sensitiveThings[recordI]) {
                     const response = await getOrganizationByName(sensitiveThings[recordI][thingI].word)
 
-                    console.log(response)
+                    console.log(sensitiveThings[recordI][thingI].word, response)
 
                     await createSensitiveThing({
                         id: `#ST_${idN}_${recordI}_${thingI}`,
