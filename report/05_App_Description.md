@@ -20,6 +20,16 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
 
 # Mettere le foto dell'applicazione
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/62948552/203139677-8f2893fc-0583-4b7c-b18f-34958b5071f2.png"
-     alt="Rappresentazione di Deloitte del processo di anonimizzazione dei dati" />
+  <img src="res/firefox_aB6VKs6UPW.png"
+     alt="Home page" />
+</p>
+
+<p align="center">
+  <img src="res/image.png"
+     alt="Pagine delle query con esempio di Dataset anonimizzato" />
+</p>
+
+<p align="center">
+  <img src="res/firefox_IDsgh2rkqi.png"
+     alt="Esempio di query con reasoner" />
 </p>
