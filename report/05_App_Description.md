@@ -1,19 +1,21 @@
 # Descrizione dell'applicativo
-L'applicativo è stato realizzato con l'obiettivo di mostrare come l'ontologia creata aiuti a comprendere come funzionino i processi di anonimizzazione dei dati, permettendo in prima persona di provare tali processi. 
+L'applicativo è stato realizzato con l'obiettivo di mostrare una possibile applicazione in domini reali dell'ontologia, fornendo un esempio per aiutare a comprenderne la struttura e mostrare come essa posso verire utilizzata nel processo di anonimizzazione dei dati.
 Per l'implementazione è stato scelto il linguaggio TypeScript attraverso il framework Node.js e le seguenti librerie:
-1. Solid: libreria per la creazione di interfacce utente
+1. Solidjs: libreria per la creazione di interfacce utente reattive
 2. Stardog.js: pacchetto npm ufficiale per comunicare con un'istanza di Stardog
-3. bert-large-NER: una libreria ML sviluppata dalla community di Hugging Face utilizzata per identificare all'interno di un testo i dati sensiblii
+3. bert-large-NER: una libreria di Token Classification sviluppata dalla community di Hugging Face utilizzata per identificare all'interno di un testo i dati potenzialmente sensibli
 
-Il sistema è stato riempito di dati che un normale utente non può inserire dall'applicazione (per esempio tecniche di anonimizzazione supportate dall'applicativo).
-Dalla parte utente, è possibile anonimizzare delle informazioni passando in input una stringa dalla quale verranno estratte le variabili sensibili e dato in outputi l testo anonimizzato, la procedura che si segue all'interno dell'applicazione è:
-1. Viene creato il dataset
-2. All'interno della tabella record viene inserito un record che corrisponde alla stringa da anonimizzare.
-3. Tramite la richiesta Api al ML, vengono identificate i dati sensibili all’interno del record
-4. Questi dati sensibili vengono inseriti all’interno della tabella/classe sensitive thing.
-5. Viene poi inserito un record all’interno di AnomizedDataset che corrisponde al dataset anonimizzato con La tecnica di anonimizzazione utilizzata 
+**Anonym.me** è un applicativo Web che permette di anonimizzare una serie di record inseriti dall'utente. Dato che tale applicativo è soltato un esempio di come è possibile utilizzare l'ontologia, gli elementi considerati sensibili sono solamente i **nomi di Organizzazioni** riconosciuti dalla libreria best-large-NER con confidenza maggiore al 60%.
 
-E' possibile eseguire le query elencate nei capitoli precedenti.
+Prima che un utente possa utilizzare l'applicativo, è necessario inserire nell'ontologia tutte le entità che non dipendono dall'input dell'utente (per esempio le possibili tecniche di anonimizzazione applicabili ai dati sorgente).
+
+Per un utente che utilizza l'applicativo è possibile anonimizzare delle informazioni passando in input del testo contentente, per ciascuna riga, un record da anonimizzare (ciascuna riga verrà contata come record). Una volta premuto il pulsante "Anonymize", dai record inseriti verranno estratte le variabili sensibili e l'utente sarà reindirizzato alla pagina delle query. Il processo effettuato dall'applicativo è il seguente:
+1. Tramite la richiesta Api al ML, vengono identificate i dati sensibili all’interno del record (passaggio eseguito immediatamente data la possibilità che le API non siano disponibili)
+2. Vengono create le entità Dataset e AnonymizedDataset in modo da avere un riferimeno per i Record
+3. Vengono inseriti i Record del Dataset e record dell'AnonimizedDataset
+4. Eventuali dati sensibili individuati vengono collegati al relativo Record nonchè alle relative entità che rappresentano
+
+Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o senza reasoner) le query descritte nel capitolo precedente o query create sul momento dall'utente.
 
 
 # Mettere le foto dell'applicazione
