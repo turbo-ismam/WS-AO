@@ -36,3 +36,9 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
      alt="Esempio di query con reasoner" />
    <em>Esempio di query con reasoner</em>
 </p>
+
+<p align="center">
+  <img src="res/firefox_O7soH5cFka.png"
+     alt="DropDown delle query" />
+   <em>DropDown delle query</em>
+</p>
