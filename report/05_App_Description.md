@@ -22,6 +22,7 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
 <p align="center">
   <img src="res/firefox_aB6VKs6UPW.png"
      alt="Home page" />
+   <em>Home page</em>
 </p>
 
 <p align="center">
