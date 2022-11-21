@@ -19,3 +19,7 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
 
 
 # Mettere le foto dell'applicazione
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/62948552/203139677-8f2893fc-0583-4b7c-b18f-34958b5071f2.png"
+     alt="Rappresentazione di Deloitte del processo di anonimizzazione dei dati" />
+</p>
