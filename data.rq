@@ -1,0 +1,32 @@
+INSERT DATA {
+    GRAPH <https://github.com/turbo-ismam/WS-AO/> {
+        <#AT_DataMasking>
+            a ao:AnonymizationTechnique ;
+            ao:name "Data Masking" ;
+            ao:description "il data masking si riferisce alla divulgazione di dati con valori modificati. L'anonimizzazione dei dati viene eseguita creando un'immagine speculare di un database e implementando strategie di alterazione, come il mescolamento dei caratteri, la crittografia, i termini o la sostituzione dei caratteri. Ad esempio, un carattere valore può essere sostituito da un simbolo come '*' o 'x'. Rende difficile l'identificazione o il reverse engineering." .
+        <#AT_Pseudoanonymization>
+            a ao:AnonymizationTechnique ;
+            ao:name "Pseudoanonimizzazione" ;
+            ao:description "la pseudonimizzazione è uno strumento di anonimizzazione dei dati che sostituisce gli identificatori privati con falsi identificatori o pseudonimi, ad esempio scambiando l'identificatore 'John Smith' con l'identificatore 'Mark Spencer'. Mantiene la precisione statistica e la riservatezza dei dati, consentendo di utilizzare i dati modificati per la creazione, la formazione, il test e l'analisi, mantenendo allo stesso tempo la privacy dei dati." .
+        <#AT_Generalization>
+            a ao:AnonymizationTechnique ;
+            ao:name "Generalizzazione" ;
+            ao:description "la generalizzazione implica l'esclusione di alcuni dati di proposito per renderli meno identificabili. I dati possono essere modificati in una serie di intervalli o in un'ampia regione con limiti ragionevoli. Ad esempio, il numero civico di un indirizzo può essere cancellato, ma assicurati che il nome della corsia non venga cancellato. L'obiettivo è rimuovere alcuni degli identificatori mantenendo l'accuratezza dei dati." .
+        <#AT_DataSwapping>
+            a ao:AnonymizationTechnique ;
+            ao:name "Data Swapping" ;
+            ao:description "il data swapping, spesso noto come permutazione e mescolamento, riorganizza i valori degli attributi del set di dati in modo che non si adattino alle informazioni originali. Cambiare attributi (colonne) che includono valori riconoscibili, come la data di nascita, può avere un enorme impatto sull'anonimizzazione." .
+        <#AT_DataPerturbation>
+            a ao:AnonymizationTechnique ;
+            ao:name "Data Perturbation" ;
+            ao:description "la perturbazione dei dati modifica marginalmente il set di dati iniziale applicando metodi di numerazione arrotondata e aggiungendo rumore casuale. L'insieme dei valori deve essere proporzionale al disturbo. Una piccola base può contribuire a una scarsa anonimizzazione, mentre una base ampia può ridurre l'utilità di un set di dati. Ad esempio, una base di 5 dovrebbe essere utilizzata per arrotondare valori come l'età o il numero civico." .
+        <#AT_SyntheticData>
+            a ao:AnonymizationTechnique ;
+            ao:name "Synthetic Data" ;
+            ao:description "I synthetic data sono informazioni generate algoritmicamente senza alcuna relazione con alcun caso reale. I dati vengono utilizzati per costruire set di dati artificiali invece di modificare o utilizzare il set di dati originale e compromettere la privacy e la protezione. Il metodo dei synthetic data include la costruzione di modelli matematici basati su modelli contenuti nel set di dati originale. Deviazioni standard, regressione lineare, mediane o altri metodi statistici possono essere utilizzati per produrre risultati sintetici." .
+        
+        <#Sony>
+            a foaf:Organization ;
+            foaf:name "Sony" .
+    }
+}
