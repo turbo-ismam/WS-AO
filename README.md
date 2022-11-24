@@ -18,4 +18,4 @@
   - MLO (Machine Learning Ontology)
   - FOAF (Friend Of A Friend)
 
-- Eseguire la query contenuta nel file data.rq nel DB creato in precedenza
+- Eseguire la query contenuta nel file `data.rq` nel DB creato in precedenza
