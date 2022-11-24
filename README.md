@@ -9,4 +9,11 @@
 
 - Dalla propria istanza di Stardog Studio creare il DB `ao`
 
-- 
+- Importare nel DB appena creato il file `AO.owl` selezionando come formato `RDF/XML`, senza nessuna compressione
+
+- Importare le ontologie
+  - DCAT (Data Catalog Vocabulary)
+  - MLO (Machine Learning Ontology)
+  - FOAF (Friend Of A Friend)
+
+- Creare una query con il contenuto del file data.rq 
