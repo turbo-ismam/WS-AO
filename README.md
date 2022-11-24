@@ -9,6 +9,8 @@
 
 - Dalla propria istanza di Stardog Studio creare il DB `ao`
 
+- Importare o inserire manualemente i namespace contenuti nel file `namespaces.ttl`
+
 - Importare nel DB appena creato il file `AO.owl` selezionando come formato `RDF/XML`, senza nessuna compressione
 
 - Importare le ontologie
