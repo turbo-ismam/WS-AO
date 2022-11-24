@@ -1,5 +1,11 @@
 # Modellazione dell'Ontologia
 
+<p align="center">
+  <img src="res/aograph.jpeg"
+     alt="Grafo Ontologia" />
+   <em>Grafo dell'ontologia</em>
+</p>
+
 ## Classi modellate
 
 ### Record
