@@ -1,0 +1,10 @@
+PREFIX : <http://api.stardog.com/>
+PREFIX ao: <https://github.com/turbo-ismam/WS-AO/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX mlo: <http://www.a2rd.net.br/mlo#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX stardog: <tag:stardog:api:>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
