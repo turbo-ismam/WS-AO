@@ -2,9 +2,9 @@ import { Connection, query } from 'stardog'
 import { defaultOptions, StardogQueryOptions, StardogQueryResult } from '../models/Stardog'
 
 export const conn = new Connection({
-  username: "batikus@gmail.com",
-  password: "5Jj64hX4UsnVVHs",
-  endpoint: "https://sd-9bccc1ca.stardog.cloud:5820"
+  username: "****",
+  password: "****",
+  endpoint: "https://****.stardog.cloud:5820"
 })
 
 export const database = "ao"
