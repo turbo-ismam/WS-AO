@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://github.com/turbo-ismam/WS-AO/"
+     xml:base="https://github.com/turbo-ismam/WS-AO/"
+     xmlns:mlo="http://www.a2rd.net.br/mlo#mlo:"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dcat="http://www.w3.org/ns/dcat#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:mlo1="http://www.semanticweb.org/user/ontologies/2020/0/ml-ontology#mlo:"
+     xmlns:prov="http://www.w3.org/ns/prov#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:schema="http://schema.org/"
+     xmlns:studio="https://github.com/turbo-ismam/WS-AO/tag:stardog:studio:">
+    <owl:Ontology rdf:about="https://github.com/turbo-ismam/WS-AO/">
+        <owl:imports rdf:resource="http://www.a2rd.net.br/mlo/10.0"/>
+        <owl:imports rdf:resource="http://www.w3.org/ns/dcat"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.a2rd.net.br/mlo#isPart -->
+
+    <owl:ObjectProperty rdf:about="http://www.a2rd.net.br/mlo#isPart">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/anonymizedAs -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/anonymizedAs">
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/anonymizedFrom"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/anonymizedFrom -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/anonymizedFrom">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/contains -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/contains">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/arco/ontology/core/hasPart"/>
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/isContainedIn"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/Record"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/has -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/has">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/arco/ontology/core/hasPart"/>
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/locatedIn"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/Record"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/identifiedBy -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/identifiedBy">
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/identifies"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/identifiedByMLApplication -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/identifiedByMLApplication">
+        <rdfs:subPropertyOf rdf:resource="https://github.com/turbo-ismam/WS-AO/identifiedBy"/>
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/identifies"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="http://www.a2rd.net.br/mlo#Applications"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/identifiedByPerson -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/identifiedByPerson">
+        <rdfs:subPropertyOf rdf:resource="https://github.com/turbo-ismam/WS-AO/identifiedBy"/>
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/identifies"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/identifies -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/identifies">
+        <rdfs:domain rdf:resource="http://www.a2rd.net.br/mlo#Applications"/>
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/isContainedIn -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/isContainedIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.a2rd.net.br/mlo#isPart"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/Record"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/isRepresentedAs -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/isRepresentedAs">
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/represents"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/locatedIn -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/locatedIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.a2rd.net.br/mlo#isPart"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/Record"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/represents -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/represents">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/usedFor -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/usedFor">
+        <owl:inverseOf rdf:resource="https://github.com/turbo-ismam/WS-AO/usedTechnique"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/usedTechnique -->
+
+    <owl:ObjectProperty rdf:about="https://github.com/turbo-ismam/WS-AO/usedTechnique">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset"/>
+        <rdfs:range rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/arco/ontology/core/hasPart -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/arco/ontology/core/hasPart">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/arco/ontology/location/isTimeIndexedTypedLocationOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/arco/ontology/location/isTimeIndexedTypedLocationOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#influencer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/description -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/description">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/isPseudoAnonymized -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/isPseudoAnonymized">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/name -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/name">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+        <owl:propertyDisjointWith rdf:resource="https://w3id.org/italia/onto/l0/name"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/position -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/position">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/sensibility -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/sensibility">
+        <rdfs:domain rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/text -->
+
+    <owl:DatatypeProperty rdf:about="https://github.com/turbo-ismam/WS-AO/text">
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/Record"/>
+        <rdfs:domain rdf:resource="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/italia/onto/l0/name -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/italia/onto/l0/name"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique -->
+
+    <owl:Class rdf:about="https://github.com/turbo-ismam/WS-AO/AnonymizationTechnique"/>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/AnonymizedDataset -->
+
+    <owl:Class rdf:about="https://github.com/turbo-ismam/WS-AO/AnonymizedDataset">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/Record -->
+
+    <owl:Class rdf:about="https://github.com/turbo-ismam/WS-AO/Record"/>
+    
+
+
+    <!-- https://github.com/turbo-ismam/WS-AO/SensibleThing -->
+
+    <owl:Class rdf:about="https://github.com/turbo-ismam/WS-AO/SensibleThing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointProperties"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.a2rd.net.br/mlo#hasPart"/>
+            <rdf:Description rdf:about="https://github.com/turbo-ismam/WS-AO/contains"/>
+            <rdf:Description rdf:about="https://w3id.org/arco/ontology/core/hasPart"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
