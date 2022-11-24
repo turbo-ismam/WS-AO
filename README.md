@@ -7,6 +7,6 @@
 
 - Sostituire i dati nel file StardogQuery.tsx con quelli relativi alla propria istanza di Stardog
 
-- Dalla propria istanza di Stardog Studio creare il DB **ao**
+- Dalla propria istanza di Stardog Studio creare il DB `ao`
 
 - 
