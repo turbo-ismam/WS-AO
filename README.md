@@ -19,3 +19,9 @@
   - FOAF (Friend Of A Friend)
 
 - Eseguire la query contenuta nel file `data.rq` nel DB creato in precedenza
+
+- Navigare nella cartella `frontend` ed eseguire i seguenti comandi:  
+`nmp i
+npm run start`
+
+- Utilizzare l'applicativo dall'indirizzo `localhost:3000/`
