@@ -10,7 +10,7 @@ Per l'implementazione è stato scelto il linguaggio TypeScript attraverso il fra
 Prima che un utente possa utilizzare l'applicativo, è necessario inserire nell'ontologia tutte le entità che non dipendono dall'input dell'utente (per esempio le possibili tecniche di anonimizzazione applicabili ai dati sorgente).
 
 Per un utente che utilizza l'applicativo è possibile anonimizzare delle informazioni passando in input del testo contentente, per ciascuna riga, un record da anonimizzare (ciascuna riga verrà contata come record). Una volta premuto il pulsante "Anonymize", dai record inseriti verranno estratte le variabili sensibili e l'utente sarà reindirizzato alla pagina delle query. Il processo effettuato dall'applicativo è il seguente:
-1. Tramite la richiesta Api al ML, vengono identificate i dati sensibili all’interno del record (passaggio eseguito immediatamente data la possibilità che le API non siano disponibili)
+1. Viene generata una richiesta mediante le API fornite da HuggingFace per identificare i dati sensibili all’interno del record (passaggio eseguito immediatamente data la possibilità che le API non siano disponibili)
 2. Vengono create le entità Dataset e AnonymizedDataset in modo da avere un riferimeno per i Record
 3. Vengono inseriti i Record del Dataset e record dell'AnonimizedDataset
 4. Eventuali dati sensibili individuati vengono collegati al relativo Record nonchè alle relative entità che rappresentano
