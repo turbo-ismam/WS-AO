@@ -1,3 +1,13 @@
+# Elaborato di Web Semantico
+<center>
+Un'ontologia sull'anonimizzazione dei dati - Anonym.me
+
+
+Ismam Abu - 0001005104
+Konrad Gómułka - 0001000974
+Hamado Dene - 0000973128
+</center>
+
 # Introduzione
 
 Nel contesto odierno il dato è una delle più grandi fonti di guadagno al mondo. Le organizzazioni sono sempre più esperte nella raccolta e monetizzazione di informazioni, ciò crea numerose opportunità di business ma altrettante di furto di dati, leak e violazione della privacy.

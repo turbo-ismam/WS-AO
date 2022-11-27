@@ -1,7 +1,7 @@
 # Modellazione dell'Ontologia
 
 <p align="center">
-  <img src="res/aograph.jpeg"
+  <img src="res/aograph.jpg"
      alt="Grafo Ontologia" />
    <em>Grafo dell'ontologia</em>
 </p>

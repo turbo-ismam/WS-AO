@@ -20,25 +20,25 @@ Una volta reindirizzato alla pagina delle Query è possibile eseguire (con o sen
 
 # Immagini dell'applicativo
 <p align="center">
-  <img src="res/firefox_aB6VKs6UPW.png"
+  <img src="res/firefox_aB6VKs6UPW.jpg"
      alt="Home page" />
    <em>Home page</em>
 </p>
 
 <p align="center">
-  <img src="res/image.png"
+  <img src="res/image.jpg"
      alt="Pagine delle query con esempio di Dataset anonimizzato" />
    <em>Pagine delle query con esempio di Dataset anonimizzato</em>
 </p>
 
 <p align="center">
-  <img src="res/firefox_IDsgh2rkqi.png"
+  <img src="res/firefox_IDsgh2rkqi.jpg"
      alt="Esempio di query con reasoner" />
    <em>Esempio di query con reasoner</em>
 </p>
 
 <p align="center">
-  <img src="res/firefox_O7soH5cFka.png"
+  <img src="res/firefox_O7soH5cFka.jpg"
      alt="DropDown delle query" />
    <em>DropDown delle query</em>
 </p>

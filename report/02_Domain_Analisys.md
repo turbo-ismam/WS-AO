@@ -15,7 +15,7 @@ La pseudoanonimizzazione è un concetto leggermente diverso dall'anonimizzazione
 ## Processo di anonimizzazione
 Deloitte descrive il processo attraverso cui si anonimizzano i dati con il seguente diagramma.
 <p align="center">
-  <img src="res/anonimization.png"
+  <img src="res/anonimization.jpg"
      alt="Rappresentazione di Deloitte del processo di anonimizzazione dei dati" />
 </p>
 
